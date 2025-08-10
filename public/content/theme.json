@@ -1,0 +1,13 @@
+{
+  "colors": {
+    "primary": "#6b5bff",
+    "background": "#ffffff",
+    "foreground": "#111111"
+  },
+  "fonts": {
+    "body": "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji'",
+    "heading": "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji'"
+  }
+}
+
+

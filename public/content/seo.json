@@ -1,0 +1,17 @@
+{
+  "title": "Infinity Pixel",
+  "description": "JSON-powered template with dynamic theme, assets, and SEO.",
+  "openGraph": {
+    "type": "website",
+    "title": "Infinity Pixel",
+    "description": "JSON-powered template with dynamic theme, assets, and SEO.",
+    "images": [
+      { "url": "/vercel.svg", "width": 1200, "height": 630, "alt": "Infinity Pixel" }
+    ]
+  },
+  "twitter": {
+    "cardType": "summary_large_image"
+  }
+}
+
+

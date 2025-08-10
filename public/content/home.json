@@ -1,0 +1,42 @@
+{
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "About", "anchor": "about" },
+    { "label": "Portfolio", "href": "/portfolio" },
+    { "label": "Features", "anchor": "features" },
+    { "label": "Contact", "anchor": "contact" }
+  ],
+  "hero": {
+    "eyebrow": "Enjoy the taste of",
+    "title": "botanical",
+    "description": "Our coffee doesn't have to taste that way. But it does. It's not your typical. It's unnecessarily good.",
+    "backgroundImage": "/images/camera.jpg",
+    "backgroundVideo": "/videos/hero-background.mp4",
+    "statLabel": "99+ Beans",
+    "statBody": "'Too far' is exactly where we want to be. All in the name of coffee.",
+    "statImage": "/images/camera.jpg",
+    "statStack": ["/images/camera.jpg", "/images/wedding.jpg", "/images/wedding.jpg"],
+    "ctaLabel": "Explore Goodies",
+    "ctaHref": "#goodies"
+  },
+  "features": [
+    {
+      "heading": "From Greenies to Delight.",
+      "body": "All in the name of coffee.",
+      "variant": "text"
+    },
+    {
+      "heading": "It doesn't have to taste that way.",
+      "body": "But it does. It's not your typical. It's unnecessarily good.",
+      "variant": "media",
+      "media": "/images/wedding.jpg"
+    }
+  ],
+  "cities": [
+    { "name": "Prague", "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "image": "/images/camera.jpg" },
+    { "name": "Berlin", "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "image": "/images/wedding.jpg" },
+    { "name": "Vienna", "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", "image": "/images/camera.jpg" }
+  ]
+}
+
+
