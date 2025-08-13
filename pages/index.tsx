@@ -7,6 +7,9 @@ import AboutSection from '@/components/ui/AboutSection';
 import FeatureTeasers from '@/components/ui/FeatureTeasers';
 import CityCardGrid from '@/components/ui/CityCardGrid';
 import Footer from '@/components/ui/Footer';
+import CallToAction from '@/components/ui/CallToAction';
+import Packages from '@/components/ui/Packages';
+import Testimonials from '@/components/ui/Testimonials';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import type React from 'react';
@@ -74,9 +77,12 @@ export default function Home({ theme, content }: Props) {
           ctaHref={content.hero.ctaHref}
         />
         <AboutSection />
-        <FeatureTeasers id="features" features={content.features} />
+        <FeatureTeasers id="features"/>
         <CityCardGrid id="locations" cities={content.cities} />
-        <Footer />
+        <Packages id="packages" />
+        <Testimonials id="testimonials" />
+        <CallToAction id="cta" />
+        {/* <Footer /> */}
       </main>
       <ScrollToTop />
     </ErrorBoundary>
