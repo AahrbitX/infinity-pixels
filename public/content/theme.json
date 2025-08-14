@@ -1,10 +1,19 @@
 {
   "colors": {
     "primary": "#6b5bff",
+    "primaryLight": "#8c7fff",
+    "primaryDark": "#5341cc",
     "secondary": "#ff9800",
+    "secondaryLight": "#ffb74d",
+    "secondaryDark": "#f57c00",
     "accent": "#4caf50",
+    "accentLight": "#81c784",
+    "accentDark": "#388e3c",
     "background": "#ffffff",
+    "backgroundAlt": "#f7f7f7",
     "foreground": "#111111",
+    "foregroundMuted": "#6b7280",
+    "foregroundAlt": "#4b5563",
     "gray": {
       "50": "#f9fafb",
       "100": "#f3f4f6",
@@ -18,9 +27,17 @@
       "900": "#111827"
     },
     "success": "#10b981",
+    "successLight": "#34d399",
     "error": "#ef4444",
+    "errorLight": "#f87171",
     "warning": "#f59e0b",
-    "info": "#3b82f6"
+    "warningLight": "#fbbf24",
+    "info": "#3b82f6",
+    "infoLight": "#60a5fa",
+    "border": "#e5e7eb",
+    "borderLight": "#f3f4f6",
+    "shadow": "rgba(0, 0, 0, 0.1)",
+    "overlay": "rgba(0, 0, 0, 0.5)"
   },
   "fonts": {
     "body": "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji'",
@@ -48,47 +65,93 @@
     "light": {
       "colors": {
         "primary": "#6b5bff",
+        "primaryLight": "#8c7fff",
+        "primaryDark": "#5341cc",
         "background": "#ffffff",
-        "foreground": "#111111"
+        "backgroundAlt": "#f7f7f7",
+        "foreground": "#111111",
+        "foregroundMuted": "#6b7280",
+        "foregroundAlt": "#4b5563",
+        "border": "#e5e7eb",
+        "borderLight": "#f3f4f6",
+        "shadow": "rgba(0, 0, 0, 0.1)",
+        "overlay": "rgba(0, 0, 0, 0.5)"
       }
     },
     "dark": {
       "colors": {
         "primary": "#8b7dff",
+        "primaryLight": "#a59dff",
+        "primaryDark": "#6b5bff",
         "background": "#111111",
-        "foreground": "#ffffff"
+        "backgroundAlt": "#1f2937",
+        "foreground": "#ffffff",
+        "foregroundMuted": "#d1d5db",
+        "foregroundAlt": "#e5e7eb",
+        "border": "#374151",
+        "borderLight": "#4b5563",
+        "shadow": "rgba(0, 0, 0, 0.5)",
+        "overlay": "rgba(0, 0, 0, 0.7)"
       }
     },
     "blue": {
       "colors": {
         "primary": "#3b82f6",
+        "primaryLight": "#60a5fa",
+        "primaryDark": "#2563eb",
         "secondary": "#2563eb",
+        "secondaryLight": "#3b82f6",
+        "secondaryDark": "#1d4ed8",
         "background": "#ffffff",
-        "foreground": "#111111"
+        "backgroundAlt": "#f7f7f7",
+        "foreground": "#111111",
+        "foregroundMuted": "#6b7280",
+        "foregroundAlt": "#4b5563"
       }
     },
     "green": {
       "colors": {
         "primary": "#10b981",
+        "primaryLight": "#34d399",
+        "primaryDark": "#059669",
         "secondary": "#059669",
+        "secondaryLight": "#10b981",
+        "secondaryDark": "#047857",
         "background": "#ffffff",
-        "foreground": "#111111"
+        "backgroundAlt": "#f7f7f7",
+        "foreground": "#111111",
+        "foregroundMuted": "#6b7280",
+        "foregroundAlt": "#4b5563"
       }
     },
     "orange": {
       "colors": {
         "primary": "#f59e0b",
+        "primaryLight": "#fbbf24",
+        "primaryDark": "#d97706",
         "secondary": "#d97706",
+        "secondaryLight": "#f59e0b",
+        "secondaryDark": "#b45309",
         "background": "#ffffff",
-        "foreground": "#111111"
+        "backgroundAlt": "#f7f7f7",
+        "foreground": "#111111",
+        "foregroundMuted": "#6b7280",
+        "foregroundAlt": "#4b5563"
       }
     },
     "red": {
       "colors": {
         "primary": "#ef4444",
+        "primaryLight": "#f87171",
+        "primaryDark": "#dc2626",
         "secondary": "#dc2626",
+        "secondaryLight": "#ef4444",
+        "secondaryDark": "#b91c1c",
         "background": "#ffffff",
-        "foreground": "#111111"
+        "backgroundAlt": "#f7f7f7",
+        "foreground": "#111111",
+        "foregroundMuted": "#6b7280",
+        "foregroundAlt": "#4b5563"
       }
     }
   }

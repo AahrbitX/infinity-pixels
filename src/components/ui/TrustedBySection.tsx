@@ -1,14 +1,23 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TrustedByContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface TrustedBySectionProps {
   content: TrustedByContent;
 }
 
 export default function TrustedBySection({ content }: TrustedBySectionProps) {
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
+  
   return (
-    <section className="py-20 bg-white">
+    <section 
+      className="py-20"
+      style={{ backgroundColor: 'var(--color-background)' }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Section - Text Content */}
@@ -24,7 +33,8 @@ export default function TrustedBySection({ content }: TrustedBySectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
+              className="text-4xl lg:text-5xl font-bold leading-tight"
+              style={{ color: 'var(--color-foreground)' }}
             >
               {content.title}
             </motion.h2>
@@ -34,7 +44,8 @@ export default function TrustedBySection({ content }: TrustedBySectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-gray-600 leading-relaxed"
+              className="text-lg leading-relaxed"
+              style={{ color: 'var(--color-foregroundMuted)' }}
             >
               {content.description}
             </motion.p>
@@ -55,7 +66,17 @@ export default function TrustedBySection({ content }: TrustedBySectionProps) {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
-                className="bg-white rounded-lg p-3 text-center min-h-[120px] flex flex-col justify-center hover:border-gray-400 transition-colors duration-300"
+                className="rounded-lg p-3 text-center min-h-[120px] flex flex-col justify-center transition-colors duration-300"
+                style={{ 
+                  backgroundColor: 'var(--color-background)', 
+                  borderColor: 'var(--color-border)',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  ['--hover-border-color' as any]: 'var(--color-foregroundMuted)'
+                }}
+                whileHover={{
+                  borderColor: 'var(--color-foregroundMuted)'
+                }}
               >
                 <Image 
                   src={logo} 

@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import ThemeSwitcher from './ThemeSwitcher';
 import { NavItem } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor } from '@/lib/hooks/useThemeUtils';
 
 interface NavBarProps {
   items?: NavItem[];
@@ -15,6 +17,10 @@ export default function NavBar({ items = [] }: NavBarProps) {
   const router = useRouter();
   const [currentAnchor, setCurrentAnchor] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const backgroundColor = useThemeColor('background');
+  const foregroundColor = useThemeColor('foreground');
   
   // Load nav items from JSON if not provided
   useEffect(() => {
@@ -128,9 +134,7 @@ export default function NavBar({ items = [] }: NavBarProps) {
   // Use a constant fixed container; animate the 'top' position with Framer for smooth docking
   const containerClass = 'fixed z-50 left-0 right-0 md:left-1/2 md:-translate-x-1/2 md:right-auto';
 
-  const navClassDesktop = docked
-    ? "relative hidden md:inline-block w-[700px] bg-white text-black px-0 py-0 rounded-l-[15px] rounded-r-[15px] before:content-[''] before:absolute before:top-0 before:left-0 before:w-[200px] before:h-full before:bg-white before:skew-x-[25deg] before:-translate-x-1/2 before:rounded-tl-[20px] before:rounded-bl-[20px] before:z-[-1] after:content-[''] after:absolute after:top-0 after:right-0 after:w-[200px] after:h-full after:bg-white after:skew-x-[-25deg] after:translate-x-1/2 after:rounded-tr-[20px] after:rounded-br-[20px] after:z-[-1] transition-all duration-300"
-    : "relative hidden md:inline-block w-[600px] bg-white text-black px-0 py-0 rounded-l-[15px] rounded-r-[15px] before:content-[''] before:absolute before:top-0 before:left-0 before:w-[200px] before:h-full before:bg-white before:skew-x-[25deg] before:-translate-x-1/2 before:rounded-tl-[20px] before:rounded-bl-[20px] before:z-[-1] after:content-[''] after:absolute after:top-0 after:right-0 after:w-[200px] after:h-full after:bg-white after:skew-x-[-25deg] after:translate-x-1/2 after:rounded-tr-[20px] after:rounded-br-[20px] after:z-[-1] transition-all duration-300";
+  const navClassDesktop = `relative hidden md:inline-block ${docked ? 'w-[700px]' : 'w-[600px]'} px-0 py-0 rounded-l-[15px] rounded-r-[15px] before:content-[''] before:absolute before:top-0 before:left-0 before:w-[200px] before:h-full before:bg-[var(--color-background)] before:skew-x-[25deg] before:-translate-x-1/2 before:rounded-tl-[20px] before:rounded-bl-[20px] before:z-[-1] after:content-[''] after:absolute after:top-0 after:right-0 after:w-[200px] after:h-full after:bg-[var(--color-background)] after:skew-x-[-25deg] after:translate-x-1/2 after:rounded-tr-[20px] after:rounded-br-[20px] after:z-[-1] transition-all duration-300`;
 
   const navClassMobile = 'md:hidden w-full px-3';
 
@@ -144,16 +148,22 @@ export default function NavBar({ items = [] }: NavBarProps) {
     >
       {/* Mobile bar */}
       <div className={navClassMobile}>
-        <div className="flex items-center justify-between bg-white text-black rounded-lg px-3 py-2 shadow-md">
+        <div 
+          className="flex items-center justify-between rounded-lg px-3 py-2 shadow-md"
+          style={{ 
+            backgroundColor: 'var(--color-background)',
+            color: 'var(--color-foreground)'
+          }}
+        >
           <button
             aria-label="Toggle navigation"
             className="p-2"
             onClick={() => setIsOpen((v) => !v)}
           >
             {/* simple hamburger */}
-            <span className="block w-5 h-0.5 bg-black mb-1" />
-            <span className="block w-5 h-0.5 bg-black mb-1" />
-            <span className="block w-5 h-0.5 bg-black" />
+            <span className="block w-5 h-0.5 mb-1" style={{ backgroundColor: 'var(--color-foreground)' }} />
+            <span className="block w-5 h-0.5 mb-1" style={{ backgroundColor: 'var(--color-foreground)' }} />
+            <span className="block w-5 h-0.5" style={{ backgroundColor: 'var(--color-foreground)' }} />
           </button>
           
           {/* Add theme switcher to mobile nav */}
@@ -163,16 +173,21 @@ export default function NavBar({ items = [] }: NavBarProps) {
         <motion.div
           initial={false}
           animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-          className="overflow-hidden mt-2 rounded-2xl bg-white/95 text-black border border-gray-200"
+          className="overflow-hidden mt-2 rounded-2xl border"
+          style={{ 
+            backgroundColor: 'var(--color-background)',
+            color: 'var(--color-foreground)',
+            borderColor: 'var(--color-border)'
+          }}
         >
-          <ul className="flex flex-col divide-y divide-gray-200">
+          <ul className="flex flex-col" style={{ borderColor: 'var(--color-border)' }}>
             {(menuItems || []).map((it) => {
               const href = it.anchor ? `/#${it.anchor}` : it.href ?? '#';
               const isActiveRoute = !!it.href && router.pathname === it.href && !(router.pathname === '/' && currentAnchor);
               const isActiveAnchor = router.pathname === '/' && !!it.anchor && currentAnchor === it.anchor;
               const isActive = isActiveRoute || isActiveAnchor;
               return (
-                <li key={it.label}>
+                <li key={it.label} style={{ borderBottom: '1px solid var(--color-border)' }}>
                   <Link
                     href={href}
                     scroll={true}
@@ -195,7 +210,11 @@ export default function NavBar({ items = [] }: NavBarProps) {
                         setCurrentAnchor(null);
                       }
                     }}
-                    className={`block px-4 py-3 transition-all duration-300 ease-out nav-link ${isActive ? 'bg-gray-100 border-l-4 border-lime-300' : 'hover:bg-gray-50'}`}
+                    className={`block px-4 py-3 transition-all duration-300 ease-out nav-link ${isActive ? 'border-l-4' : ''}`}
+                    style={{ 
+                      backgroundColor: isActive ? 'var(--color-backgroundAlt)' : 'transparent',
+                      borderLeftColor: isActive ? 'var(--color-primary)' : 'transparent'
+                    }}
                   >
                     <span className="inline-flex items-center gap-2">
                       {isActive && (
@@ -203,7 +222,7 @@ export default function NavBar({ items = [] }: NavBarProps) {
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="w-2 h-2 rounded-full bg-lime-300"
+                          className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-primary)' }}
                         />
                       )}
                       {it.label}
@@ -217,7 +236,10 @@ export default function NavBar({ items = [] }: NavBarProps) {
       </div>
 
       {/* Desktop bar */}
-      <nav className={navClassDesktop}>
+      <nav className={navClassDesktop} style={{ 
+        backgroundColor: 'var(--color-background)',
+        color: 'var(--color-foreground)'
+      }}>
         <div className="flex items-center justify-between h-15 px-8">
           <ul className={`relative hidden md:flex justify-center gap-6 list-none m-0 p-0 ${docked ? 'py-3 mx-auto' : ''}`}>
             {(menuItems || []).map((it) => {
@@ -249,7 +271,11 @@ export default function NavBar({ items = [] }: NavBarProps) {
                         setCurrentAnchor(null);
                       }
                     }}
-                    className={`transition-all duration-300 ease-out px-3 py-1 rounded-full nav-link ${isActive ? 'bg-white/15 text-black scale-105' : 'text-black/80 hover:text-black hover:scale-105'}`}
+                    className={`transition-all duration-300 ease-out px-3 py-1 rounded-full nav-link ${isActive ? 'scale-105' : 'hover:scale-105'}`}
+                    style={{ 
+                      backgroundColor: isActive ? 'var(--color-backgroundAlt)' : 'transparent',
+                      color: isActive ? 'var(--color-foreground)' : 'var(--color-foregroundMuted)'
+                    }}
                   >
                     <span className="inline-flex items-center gap-2">
                       {isActive && (
@@ -257,7 +283,7 @@ export default function NavBar({ items = [] }: NavBarProps) {
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="w-2 h-2 rounded-full bg-lime-300"
+                          className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--color-primary)' }}
                         />
                       )}
                       {it.label}
@@ -269,7 +295,8 @@ export default function NavBar({ items = [] }: NavBarProps) {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="absolute inset-0 -z-10 rounded-full bg-black/10"
+                      className="absolute inset-0 -z-10 rounded-full"
+                      style={{ backgroundColor: 'var(--color-primary)', opacity: 0.15 }}
                     />
                   )}
                 </li>

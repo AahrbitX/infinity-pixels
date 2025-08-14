@@ -51,6 +51,15 @@ html, body, #__next {
   padding: 0; 
 }
 
+/* Theme transition class */
+.theme-transition,
+.theme-transition *,
+.theme-transition *:before,
+.theme-transition *:after {
+  transition: all 0.2s ease-out !important;
+  transition-delay: 0s !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -62,7 +71,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  will-change: background-color, color;
 }
 
 a { 

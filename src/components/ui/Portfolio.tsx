@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
 import { PortfolioContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface PortfolioProps {
   id?: string;
@@ -12,6 +14,10 @@ interface PortfolioProps {
 export default function Portfolio({ id, content }: PortfolioProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
 
   // Convert portfolio items to gallery format
   const galleryImages = content.items.map(item => ({
@@ -121,18 +127,44 @@ export default function Portfolio({ id, content }: PortfolioProps) {
       className="py-12 scroll-mt-28"
     >
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{content.title}</h2>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <h2 
+          className="text-4xl md:text-5xl font-bold mb-4"
+          style={{ color: 'var(--color-foreground)' }}
+        >
+          {content.title}
+        </h2>
+        <p 
+          className="text-xl max-w-2xl mx-auto"
+          style={{ color: 'var(--color-foregroundMuted)' }}
+        >
           {content.description}
         </p>
       </div>
 
       <div className="relative w-full h-[800px] mx-auto overflow-hidden">
         {/* Top Gradient Overlay - Fades images in from top */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+        <div 
+          className="absolute top-0 left-0 right-0 h-24 z-10 pointer-events-none"
+          style={{ 
+            background: `linear-gradient(to bottom, 
+              var(--color-background), 
+              rgba(${isDarkMode ? '17, 24, 39' : '255, 255, 255'}, 0.9), 
+              transparent
+            )` 
+          }}
+        ></div>
         
         {/* Bottom Gradient Overlay - Fades images out to bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-24 z-10 pointer-events-none"
+          style={{ 
+            background: `linear-gradient(to top, 
+              var(--color-background), 
+              rgba(${isDarkMode ? '17, 24, 39' : '255, 255, 255'}, 0.9), 
+              transparent
+            )` 
+          }}
+        ></div>
         
         {/* Column 1 - Scrolls Up Continuously */}
         <div className="absolute left-0 top-0 w-1/5 h-full overflow-hidden">
@@ -298,38 +330,63 @@ export default function Portfolio({ id, content }: PortfolioProps) {
               onTouchEnd={onTouchEnd}
             >
               {/* Close Button */}
-              <button
+              <motion.button
                 onClick={closeModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+                className="absolute top-4 right-4 z-10 p-2 rounded-full transition-colors"
+                style={{
+                  backgroundColor: `${primaryRgba(0.5)}`,
+                  color: '#fff'
+                }}
+                whileHover={{
+                  backgroundColor: primaryRgba(0.7)
+                }}
               >
                 <X size={24} />
-              </button>
+              </motion.button>
 
               {/* Link Button */}
               {galleryImages[selectedImageIndex]?.link && (
-                <button
+                <motion.button
                   onClick={openLink}
-                  className="absolute top-4 right-16 z-10 p-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors"
+                  className="absolute top-4 right-16 z-10 p-2 text-white rounded-full transition-colors"
+                  style={{
+                    background: `linear-gradient(to right, ${primaryRgba(0.8)}, ${primaryColor})`
+                  }}
+                  whileHover={{
+                    background: `linear-gradient(to right, ${primaryRgba(0.9)}, ${primaryRgba(0.8)})`
+                  }}
                   title="View Project"
                 >
                   <Instagram size={24} />
-                </button>
+                </motion.button>
               )}
 
               {/* Navigation Arrows */}
-              <button
+              <motion.button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 text-white rounded-full transition-colors"
+                style={{
+                  backgroundColor: `${primaryRgba(0.5)}`
+                }}
+                whileHover={{
+                  backgroundColor: primaryRgba(0.7)
+                }}
               >
                 <ChevronLeft size={32} />
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 text-white rounded-full transition-colors"
+                style={{
+                  backgroundColor: `${primaryRgba(0.5)}`
+                }}
+                whileHover={{
+                  backgroundColor: primaryRgba(0.7)
+                }}
               >
                 <ChevronRight size={32} />
-              </button>
+              </motion.button>
 
               {/* Image Display */}
               <div className="relative w-full h-full flex items-center justify-center">
@@ -342,7 +399,12 @@ export default function Portfolio({ id, content }: PortfolioProps) {
                 />
                 
                 {/* Image Info */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full">
+                <div 
+                  className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-full"
+                  style={{
+                    backgroundColor: `${primaryRgba(0.7)}`
+                  }}
+                >
                   <h3 className="text-lg font-semibold text-center">
                     {galleryImages[selectedImageIndex].title}
                   </h3>

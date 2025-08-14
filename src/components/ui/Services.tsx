@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 export type Service = { name: string; body: string; image: string };
 
@@ -17,6 +19,10 @@ export default function ServiceSection({
   description?: string;
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(0); // First card expanded by default
+  
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
 
   // Safety check to prevent map error
   if (!services || !Array.isArray(services)) {
@@ -40,10 +46,16 @@ export default function ServiceSection({
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
       >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 
+            className="text-4xl md:text-5xl font-bold mb-6"
+            style={{ color: 'var(--color-foreground)' }}
+          >
             {title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p 
+            className="text-xl max-w-2xl mx-auto"
+            style={{ color: 'var(--color-foregroundMuted)' }}
+          >
             {description}
           </p>
 
@@ -83,7 +95,16 @@ export default function ServiceSection({
               </div>
               
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+              <div 
+                className="absolute inset-0" 
+                style={{
+                  background: `linear-gradient(to top, 
+                    rgba(0,0,0,0.9), 
+                    rgba(0,0,0,0.5), 
+                    transparent
+                  )`
+                }}
+              />
               
               {/* Content */}
               <div className="relative z-[1] h-full flex flex-col justify-end p-8 text-white">
@@ -113,7 +134,13 @@ export default function ServiceSection({
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 + 0.4 }}
-                  className="flex items-center gap-3 text-orange-400 font-semibold group-hover:text-orange-300 transition-colors"
+                  className="flex items-center gap-3 font-semibold transition-colors"
+                  style={{ 
+                    color: primaryColor
+                  }}
+                  whileHover={{
+                    color: primaryRgba(0.8)
+                  }}
                 >
                   <span className="text-lg">Learn More</span>
                   <motion.span 
@@ -127,7 +154,14 @@ export default function ServiceSection({
               </div>
               
               {/* Hover effect border */}
-              <div className="absolute inset-0 border-2 border-transparent rounded-3xl group-hover:border-white/40 transition-colors duration-500" />
+              <div 
+                className="absolute inset-0 border-2 border-transparent rounded-3xl transition-colors duration-500" 
+                style={{ 
+                  ['--hover-border-color' as any]: primaryRgba(0.6)
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.borderColor = primaryRgba(0.6); }}
+                onMouseOut={(e) => { e.currentTarget.style.borderColor = 'transparent'; }}
+              />
             </motion.article>
           );
         })}

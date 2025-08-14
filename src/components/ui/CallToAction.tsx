@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ContactFormModal from './ContactFormModal';
 import { CallToActionContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface CallToActionProps {
   id?: string;
@@ -13,6 +15,10 @@ export default function CallToAction({ id, content }: CallToActionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
 
   return (
     <motion.section>
@@ -40,18 +46,37 @@ export default function CallToAction({ id, content }: CallToActionProps) {
         </motion.div>
         
         {/* Enhanced Overlay with Multiple Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom right, 
+              rgba(0,0,0,0.6), 
+              rgba(0,0,0,0.4), 
+              rgba(0,0,0,0.7)
+            )`
+          }} 
+        />
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to top, 
+              rgba(0,0,0,0.8), 
+              transparent, 
+              rgba(0,0,0,0.6)
+            )`
+          }} 
+        />
         
         {/* Floating Particles Effect */}
         <div className="absolute inset-0 overflow-hidden">
             {[...Array(6)].map((_, i) => (
             <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-orange-400 rounded-full opacity-60"
+                className="absolute w-2 h-2 rounded-full opacity-60"
                 style={{
-                left: `${20 + i * 15}%`,
-                top: `${30 + i * 10}%`,
+                  backgroundColor: primaryColor,
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + i * 10}%`,
                 }}
                 animate={{
                 y: [0, -20, 0],
@@ -78,7 +103,16 @@ export default function CallToAction({ id, content }: CallToActionProps) {
                 transition={{ duration: 0.8 }}
                 className="inline-block mb-6"
             >
-                <span className="px-6 py-3 rounded-full bg-gradient-to-r from-orange-400/20 to-pink-400/20 border border-orange-400/30 text-orange-300 font-semibold text-sm backdrop-blur-sm shadow-lg">
+                <span 
+                  className="px-6 py-3 rounded-full font-semibold text-sm backdrop-blur-sm shadow-lg"
+                  style={{
+                    background: `linear-gradient(to right, ${primaryRgba(0.2)}, ${primaryRgba(0.15)})`,
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    borderColor: primaryRgba(0.3),
+                    color: primaryColor
+                  }}
+                >
                 ✨ Ready to Get Started?
                 </span>
             </motion.div>
@@ -88,7 +122,10 @@ export default function CallToAction({ id, content }: CallToActionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent"
+                className="text-5xl md:text-7xl font-bold mb-8 bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(to right, #ffffff, ${primaryRgba(0.9)}, #ffffff)`
+                }}
             >
                 {content.title}
             </motion.h2>
@@ -114,9 +151,15 @@ export default function CallToAction({ id, content }: CallToActionProps) {
             >
             <a
                 href={content.buttonHref}
-                className="group px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-white/20"
             >   
-                <div className='flex justify-center items-center w-full bg-lime-400 text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'>
+                <div 
+                  className='flex justify-center items-center w-full py-3 px-6 rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'
+                  style={{
+                    backgroundColor: primaryColor,
+                    color: isDarkMode ? '#000' : '#fff',
+                    boxShadow: `0 4px 12px ${primaryRgba(0.5)}`
+                  }}
+                >
                 {content.buttonText}
                 </div>
             </a>
@@ -136,7 +179,14 @@ export default function CallToAction({ id, content }: CallToActionProps) {
         </motion.div>
 
         <motion.div className='relative bottom-12 left-10 justify-self-start items-center'>
-            <div className='bg-white w-[250px] text-black px-8 py-4 rounded-xl border-2 border-black font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 hover:cursor-pointer'>
+            <div 
+              className='w-[250px] px-8 py-4 rounded-xl border-2 font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 hover:cursor-pointer'
+              style={{
+                backgroundColor: 'var(--color-background)',
+                color: 'var(--color-foreground)',
+                borderColor: 'var(--color-foreground)'
+              }}
+            >
                 <button 
                     onClick={openModal}
                     className='flex justify-center items-center w-full'
@@ -146,7 +196,6 @@ export default function CallToAction({ id, content }: CallToActionProps) {
             </div>
         </motion.div>
         
-        {/* Contact Form Modal */}
         <ContactFormModal isOpen={isModalOpen} onClose={closeModal} />
     </motion.section>
   );

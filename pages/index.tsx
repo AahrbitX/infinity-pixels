@@ -14,6 +14,7 @@ import ScrollToTop from '@/components/ui/ScrollToTop';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import FAQ from '@/components/ui/FAQ';
 import ThemeProvider from '@/components/ThemeProvider';
+import ThemeExample from '@/components/ui/ThemeExample';
 import { HomeContent } from '@/lib/content';
 import { Theme } from '@/lib/theme';
 import type React from 'react';
@@ -57,6 +58,10 @@ export default function Home({ content }: Props) {
           />
           <Packages id="packages" content={content.packages} />
           <Testimonials id="testimonials" content={content.testimonials} />
+          <div className="container mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-center" style={{ color: 'var(--color-foreground)' }}>Theme Example</h2>
+            <ThemeExample />
+          </div>
           <CallToAction id="cta" content={content.cta} />
           <FAQ id="faq" content={content.faq} />
           <Footer content={content.footer} />

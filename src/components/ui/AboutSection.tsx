@@ -1,14 +1,28 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { AboutContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface AboutSectionProps {
   content: AboutContent;
 }
 
 export default function AboutSection({ content }: AboutSectionProps) {
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
+  
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section 
+      id="about" 
+      className="py-20"
+      // style={{ 
+      //   background: isDarkMode 
+      //     ? `linear-gradient(to bottom right, var(--color-backgroundAlt), var(--color-background))` 
+      //     : `linear-gradient(to bottom right, #f9fafb, var(--color-background))`
+      // }}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
@@ -25,7 +39,13 @@ export default function AboutSection({ content }: AboutSectionProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <span className="px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold">
+              <span 
+                className="px-4 py-2 rounded-full text-sm font-semibold"
+                style={{ 
+                  backgroundColor: primaryRgba(0.15),
+                  color: primaryColor
+                }}
+              >
                 {content.tagline}
               </span>
             </motion.div>
@@ -35,11 +55,12 @@ export default function AboutSection({ content }: AboutSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
+              className="text-4xl lg:text-5xl font-bold leading-tight"
+              style={{ color: 'var(--color-foreground)' }}
             >
               {content.title.split(' ').map((word, i, arr) => 
                 i === arr.length - 1 ? 
-                  <span key={i} className="text-orange-500"> {word} </span> : 
+                  <span key={i} style={{ color: primaryColor }}> {word} </span> : 
                   <span key={i}>{word} </span>
               )}
             </motion.h2>
@@ -49,7 +70,8 @@ export default function AboutSection({ content }: AboutSectionProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-gray-600 leading-relaxed"
+              className="text-xl leading-relaxed"
+              style={{ color: 'var(--color-foregroundMuted)' }}
             >
               {content.description}
             </motion.p>
@@ -63,8 +85,8 @@ export default function AboutSection({ content }: AboutSectionProps) {
             >
               {content.stats.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-orange-500 mb-2">{stat.value}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-3xl font-bold mb-2" style={{ color: primaryColor }}>{stat.value}</div>
+                  <div style={{ color: 'var(--color-foregroundMuted)' }}>{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -92,13 +114,22 @@ export default function AboutSection({ content }: AboutSectionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.8 }}
-                className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-gray-200"
+                className="absolute bottom-6 right-6 backdrop-blur-sm rounded-xl p-4 shadow-lg"
+                style={{
+                  backgroundColor: isDarkMode ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.95)',
+                  borderColor: 'var(--color-border)',
+                  borderWidth: '1px',
+                  borderStyle: 'solid'
+                }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-orange-400 rounded-full animate-pulse" />
+                  <div 
+                    className="w-3 h-3 rounded-full animate-pulse" 
+                    style={{ backgroundColor: primaryColor }}
+                  />
                   <div>
-                    <div className="font-bold text-gray-900">{content.floatingCard.title}</div>
-                    <div className="text-sm text-gray-600">{content.floatingCard.subtitle}</div>
+                    <div className="font-bold" style={{ color: 'var(--color-foreground)' }}>{content.floatingCard.title}</div>
+                    <div className="text-sm" style={{ color: 'var(--color-foregroundMuted)' }}>{content.floatingCard.subtitle}</div>
                   </div>
                 </div>
               </motion.div>

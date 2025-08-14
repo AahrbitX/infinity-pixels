@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TestimonialContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface TestimonialsProps {
   id?: string;
@@ -8,11 +10,18 @@ interface TestimonialsProps {
 }
 
 export default function Testimonials({ id, content }: TestimonialsProps) {
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
+  
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <svg
         key={i}
-        className={`w-5 h-5 ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+        className="w-5 h-5"
+        style={{ 
+          color: i < rating ? primaryColor : 'var(--color-border)' 
+        }}
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -36,7 +45,8 @@ export default function Testimonials({ id, content }: TestimonialsProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl md:text-5xl font-bold mb-6"
+            style={{ color: 'var(--color-foreground)' }}
           >
             {content.title}
           </motion.h2>
@@ -45,7 +55,8 @@ export default function Testimonials({ id, content }: TestimonialsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl max-w-3xl mx-auto"
+            style={{ color: 'var(--color-foregroundMuted)' }}
           >
             {content.description}
           </motion.p>
@@ -61,16 +72,30 @@ export default function Testimonials({ id, content }: TestimonialsProps) {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              style={{ 
+                backgroundColor: 'var(--color-background)',
+                borderColor: 'var(--color-border)',
+                borderWidth: '1px',
+                borderStyle: 'solid'
+              }}
             >
               {/* Rating */}
               <div className="flex items-center mb-4">
                 {renderStars(testimonial.rating)}
-                <span className="ml-2 text-sm text-gray-600">({testimonial.rating}.0)</span>
+                <span 
+                  className="ml-2 text-sm"
+                  style={{ color: 'var(--color-foregroundMuted)' }}
+                >
+                  ({testimonial.rating}.0)
+                </span>
               </div>
 
               {/* Testimonial Text */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p 
+                className="mb-6 leading-relaxed"
+                style={{ color: 'var(--color-foreground)' }}
+              >
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
 
@@ -85,9 +110,24 @@ export default function Testimonials({ id, content }: TestimonialsProps) {
                   />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.position}</p>
-                  <p className="text-xs text-gray-500">{testimonial.company}</p>
+                  <h4 
+                    className="font-semibold" 
+                    style={{ color: 'var(--color-foreground)' }}
+                  >
+                    {testimonial.name}
+                  </h4>
+                  <p 
+                    className="text-sm" 
+                    style={{ color: 'var(--color-foregroundMuted)' }}
+                  >
+                    {testimonial.position}
+                  </p>
+                  <p 
+                    className="text-xs" 
+                    style={{ color: 'var(--color-foregroundMuted)', opacity: 0.8 }}
+                  >
+                    {testimonial.company}
+                  </p>
                 </div>
               </div>
             </motion.div>

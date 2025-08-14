@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FooterContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface FooterProps {
   content: FooterContent;
@@ -10,6 +12,9 @@ interface FooterProps {
 export default function Footer({ content }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const copyrightText = content.copyright.replace(/\d{4}/, currentYear.toString());
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
   
   // Social icons mapping
   const socialIcons = {
@@ -42,7 +47,10 @@ export default function Footer({ content }: FooterProps) {
             priority
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-black/60 rounded-lg"></div>
+          <div 
+            className="absolute inset-0 rounded-lg" 
+            style={{ backgroundColor: isDarkMode ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.6)' }}
+          ></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 mt-30">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -54,7 +62,7 @@ export default function Footer({ content }: FooterProps) {
               transition={{ delay: 0.1 }}
               className="col-span-1 md:col-span-2"
             >
-              <h3 className="text-2xl font-bold mb-4 text-orange-400">{content.brand.title}</h3>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>{content.brand.title}</h3>
               <p className="text-gray-300 mb-6 max-w-md">
                 {content.brand.description}
               </p>
@@ -63,10 +71,19 @@ export default function Footer({ content }: FooterProps) {
                 {content.social.map((item, index) => (
                   <motion.a
                     key={index}
-                    whileHover={{ scale: 1.1, y: -2 }}
+
                     whileTap={{ scale: 0.95 }}
                     href={item.url}
-                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-400 transition-colors"
+                    className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    style={{
+                      backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.2)',
+                      color: '#fff',
+                      ['--hover-bg' as any]: primaryColor
+                    }}
+                    whileHover={{
+                      scale: 1.1, 
+                      y: -2
+                    }}
                     aria-label={item.platform}
                   >
                     {socialIcons[item.icon as keyof typeof socialIcons]}
@@ -82,13 +99,18 @@ export default function Footer({ content }: FooterProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-4" style={{ color: 'var(--color-primary)' }}>Quick Links</h4>
               <ul className="space-y-2">
                 {content.quickLinks.map((link, index) => (
                   <li key={index}>
                     <Link 
                       href={link.anchor ? `#${link.anchor}` : link.href} 
-                      className="text-gray-300 hover:text-orange-400 transition-colors"
+                      className="text-gray-300 transition-colors"
+                      style={{
+                        ['--hover-color' as any]: primaryColor
+                      }}
+                      onMouseOver={(e) => { e.currentTarget.style.color = primaryColor }}
+                      onMouseOut={(e) => { e.currentTarget.style.color = '' }}
                     >
                       {link.label}
                     </Link>
@@ -104,7 +126,7 @@ export default function Footer({ content }: FooterProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <h4 className="text-lg font-semibold mb-4" style={{ color: 'var(--color-primary)' }}>Contact</h4>
               <div className="space-y-2 text-gray-300">
                 <p>📍 {content.contact.address}</p>
                 <p>☎️ {content.contact.phone}</p>
@@ -119,7 +141,11 @@ export default function Footer({ content }: FooterProps) {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400"
+            className="border-t mt-12 pt-8 text-center"
+            style={{ 
+              borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.2)',
+              color: isDarkMode ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.7)'
+            }}
           >
             <p>{copyrightText}</p>
           </motion.div>

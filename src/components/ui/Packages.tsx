@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { PackageContent } from '@/lib/content';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 // import ContactFormModal from './ContactFormModal';
 // import { CheckIcon } from '@heroicons/react/24/outline';
 
@@ -14,6 +16,10 @@ export default function Packages({ id, content }: PackagesProps) {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
 
   return (
     <motion.section 
@@ -21,7 +27,8 @@ export default function Packages({ id, content }: PackagesProps) {
       initial={{ opacity: 0, y: 24 }} 
       whileInView={{ opacity: 1, y: 0 }} 
       viewport={{ once: true }} 
-      className="py-20 bg-white"
+      className="py-20"
+      style={{ backgroundColor: 'var(--color-background)' }}
     >
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header */}
@@ -30,7 +37,8 @@ export default function Packages({ id, content }: PackagesProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="text-4xl md:text-5xl font-bold mb-6"
+            style={{ color: 'var(--color-foreground)' }}
           >
             {content.title}
           </motion.h2>
@@ -39,7 +47,8 @@ export default function Packages({ id, content }: PackagesProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-xl max-w-3xl mx-auto"
+            style={{ color: 'var(--color-foregroundMuted)' }}
           >
             {content.description}
           </motion.p>
@@ -55,16 +64,23 @@ export default function Packages({ id, content }: PackagesProps) {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className={`relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 flex flex-col ${
-                pkg.popular 
-                  ? 'border-blue-500 shadow-blue-100' 
-                  : 'border-gray-200'
-              }`}
+              className="relative rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 flex flex-col"
+              style={{
+                backgroundColor: 'var(--color-background)',
+                borderColor: pkg.popular ? primaryColor : 'var(--color-border)',
+                boxShadow: pkg.popular ? `0 4px 20px ${primaryRgba(0.15)}` : undefined
+              }}
             >
               {/* Popular Badge */}
               {pkg.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  <span 
+                    className="px-4 py-2 rounded-full text-sm font-semibold"
+                    style={{
+                      backgroundColor: primaryColor,
+                      color: isDarkMode ? '#000' : '#fff'
+                    }}
+                  >
                     Most Popular
                   </span>
                 </div>
@@ -72,10 +88,25 @@ export default function Packages({ id, content }: PackagesProps) {
 
               {/* Package Header */}
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.title}</h3>
+                <h3 
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: 'var(--color-foreground)' }}
+                >
+                  {pkg.title}
+                </h3>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold text-blue-600">{pkg.price}</span>
-                  <span className="text-lg text-gray-500 ml-2">/{pkg.duration}</span>
+                  <span 
+                    className="text-4xl font-bold"
+                    style={{ color: primaryColor }}
+                  >
+                    {pkg.price}
+                  </span>
+                  <span 
+                    className="text-lg ml-2"
+                    style={{ color: 'var(--color-foregroundMuted)' }}
+                  >
+                    /{pkg.duration}
+                  </span>
                 </div>
               </div>
 
@@ -91,7 +122,7 @@ export default function Packages({ id, content }: PackagesProps) {
                     className="flex items-center"
                   >
                     {/* <CheckIcon className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" /> */}
-                    <span className="text-gray-700">{feature}</span>
+                    <span style={{ color: 'var(--color-foregroundMuted)' }}>{feature}</span>
                   </motion.li>
                 ))}
               </ul>
@@ -99,11 +130,21 @@ export default function Packages({ id, content }: PackagesProps) {
               {/* CTA Button */}
               <a
                 href={pkg.ctaHref}
-                className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 mt-auto text-center ${
-                  pkg.popular
-                    ? 'bg-blue-500 text-white hover:bg-blue-600'
-                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                }`}
+                className="w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 mt-auto text-center"
+                style={{
+                  backgroundColor: pkg.popular ? primaryColor : 'var(--color-backgroundAlt)',
+                  color: pkg.popular ? (isDarkMode ? '#000' : '#fff') : 'var(--color-foreground)'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = pkg.popular 
+                    ? primaryRgba(0.8)
+                    : isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = pkg.popular 
+                    ? primaryColor 
+                    : 'var(--color-backgroundAlt)';
+                }}
               >
                 {pkg.ctaText}
               </a>

@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
+import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 export type HeroProps = {
   backgroundImage?: string;
@@ -63,6 +65,10 @@ export default function Hero(props: HeroProps) {
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const autoSlideRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+  
+  const { isDarkMode } = useTheme();
+  const primaryColor = useThemeColor('primary');
+  const primaryRgba = useThemeRgba('primary');
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -157,7 +163,16 @@ export default function Hero(props: HeroProps) {
         )}
       </motion.div>
       
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/60" />
+      <div 
+        className="absolute inset-0" 
+        style={{
+          background: `linear-gradient(to bottom, 
+            rgba(0,0,0,0.45), 
+            rgba(0,0,0,0.35), 
+            rgba(0,0,0,0.6)
+          )`
+        }}
+      />
       
       {/* Content */}
       <div className="relative z-[2] text-white grid gap-4 px-5 py-5">
@@ -175,7 +190,13 @@ export default function Hero(props: HeroProps) {
                 initial={{ opacity: 0, x: slideDirection === 'left' ? 50 : -50 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ delay: 0.1, duration: 0.5 }} 
-                className="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-sm font-semibold backdrop-blur-sm"
+                className="px-3 py-1.5 rounded-full text-sm font-semibold backdrop-blur-sm"
+                style={{
+                  backgroundColor: `${primaryRgba(0.1)}`,
+                  borderColor: `${primaryRgba(0.2)}`,
+                  borderWidth: '1px',
+                  borderStyle: 'solid'
+                }}
               >
                 {currentSlideData.eyebrow}
               </motion.span>
@@ -207,7 +228,16 @@ export default function Hero(props: HeroProps) {
                 className="flex gap-4"
               >
                 {/* Stat card */}
-                <div className="grid grid-cols-[48px_1fr] h-[200px] items-center gap-3 p-3 rounded-2xl bg-black/35 border border-white/15 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)] backdrop-blur-sm">
+                <div 
+                  className="grid grid-cols-[48px_1fr] h-[200px] items-center gap-3 p-3 rounded-2xl backdrop-blur-sm"
+                  style={{
+                    backgroundColor: isDarkMode ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.3)',
+                    borderColor: `${primaryRgba(0.25)}`,
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    boxShadow: `inset 0 0 0 1px ${primaryRgba(0.05)}`
+                  }}
+                >
                   <div className="w-8 h-8 rounded-xl overflow-hidden">
                     <Image src={currentSlideData.statImage} alt="Stat" width={44} height={44} />
                   </div>
@@ -293,23 +323,32 @@ export default function Hero(props: HeroProps) {
       {/* Bottom CTA Section */}
       <div className="relative border-none rounded-3xl">
         <span
-          className="bg-white flex justify-self-end items-end p-5 right-0"
+          className="flex justify-self-end items-end p-5 right-0"
           style={{
             WebkitMaskImage:
               'radial-gradient(circle 40px at 0 0, transparent 39.5px, black 40px)',
+            backgroundColor: 'var(--color-background)'
           }}
         ></span>
         <div className="flex justify-end items-end border-none rounded-3xl">
         <span
-          className="bg-white p-5 right-0"
+          className="p-5 right-0"
           style={{
             WebkitMaskImage:
               'radial-gradient(circle 40px at 0 0, transparent 39.5px, black 40px)',
+            backgroundColor: 'var(--color-background)'
           }}
         ></span>
-          <div className="bg-white p-2 w-[300px] border-none rounded-tl-2xl">
+          <div className="p-2 w-[300px] border-none rounded-tl-2xl" style={{ backgroundColor: 'var(--color-background)' }}>
             <Link 
-              className="flex justify-center items-center p-2 w-[250px] ml-2 rounded-2xl font-bold text-black text-lg border-2 border-black hover:bg-gray-100 transition-colors" 
+              className="flex justify-center items-center p-2 w-[250px] ml-2 rounded-2xl font-bold text-lg transition-colors"
+              style={{
+                backgroundColor: 'transparent',
+                color: isDarkMode ? 'var(--color-foreground)' : 'var(--color-background)',
+                borderWidth: '2px',
+                borderStyle: 'solid',
+                borderColor: isDarkMode ? 'var(--color-foreground)' : 'var(--color-background)'
+              }}
               href={currentSlideData.ctaHref}
               aria-label={`${currentSlideData.ctaLabel} - navigate to next section`}
             >
