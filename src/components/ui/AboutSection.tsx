@@ -33,7 +33,7 @@ export default function AboutSection() {
               className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
             >
               Crafting the Perfect
-              <span className="text-orange-500"> Experience</span>
+              <span className="text-orange-500"> Experience </span>
             </motion.h2>
             
             <motion.p
@@ -74,14 +74,14 @@ export default function AboutSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[500px] rounded-2xl overflow-hidden ">
               <Image
                 src="/images/camera.jpg"
                 alt="Coffee brewing process"
                 fill
-                className="object-cover"
+                className="object-cover inverted"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" /> */}
               
               {/* Floating stats card */}
               <motion.div
@@ -89,7 +89,7 @@ export default function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.8 }}
-                className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg"
+                className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-gray-200"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-orange-400 rounded-full animate-pulse" />

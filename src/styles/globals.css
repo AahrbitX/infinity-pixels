@@ -175,4 +175,25 @@ button, a, input, textarea, select {
   background-clip: text;
 }
 
+.inverted {
+	clip-path: path("M30,0H570A30,30 0,0,1 600,30V350A30,30 0,0,1 570,380L410,380A30,30 0,0,0 380,410L380,470A30,30 0,0,1 350,500H30A30,30 0,0,1 0,470V30A30,30 0,0,1 30,0Z");
+	width: 600px;
+	height: 500px;
+	background-color: #513D34;
+	aspect-ratio: 6 / 5;
+}
 
+.inverted-footer {
+    clip-path: path("M32,0H1418A32,32 0,0,1 1450,32V568A32,32 0,0,1 1418,600H320A20,20 0,0,1 300,580L300,550A20,20 0,0,0 280,530L20,530A20,20 0,0,1 0,510V32A32,32 0,0,1 32,0Z");
+    width: 1450px;
+    height: 600px;
+    background-color: #513D34;
+    aspect-ratio: 29 / 12;
+  }
+.inverted-foot {
+    clip-path: path("M32,0H1418A32,32 0,0,1 1450,32V468A32,32 0,0,1 1418,500H32A32,32 0,0,1 0,468V90A20,20 0,0,1 20,70L280,70A20,20 0,0,0 300,50L300,20A20,20 0,0,1 320,0");
+    width: 1450px;
+    height: 500px;
+    background-color: #513D34;
+    aspect-ratio: 29 / 10;
+  }

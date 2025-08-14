@@ -88,7 +88,7 @@ export default function Testimonials({ id }: { id?: string }) {
       initial={{ opacity: 0, y: 24 }} 
       whileInView={{ opacity: 1, y: 0 }} 
       viewport={{ once: true }} 
-      className="py-20 bg-gray-50"
+      className="py-20"
     >
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header */}

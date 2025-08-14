@@ -1,123 +1,146 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import Image from 'next/image';
+import ContactFormModal from './ContactFormModal';
 
 export default function CallToAction({ id }: { id?: string }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <motion.section 
-      id={id} 
-      initial={{ opacity: 0, y: 24 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      viewport={{ once: true }} 
-      className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white"
-    >
-      <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div> */}
+    <motion.section>
+        <motion.div 
+        id={id} 
+        initial={{ opacity: 0, y: 24 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true }} 
+        className="relative py-20 text-white rounded-3xl overflow-hidden h-full justify-self-center inverted-footer"
+        >
+        {/* Background Image */}
+        <motion.div 
+            initial={{ scale: 1.1 }} 
+            animate={{ scale: 1 }} 
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="absolute inset-0"
+        >
+            <Image 
+            src="/images/camera.jpg" 
+            alt="Call to Action Background" 
+            fill 
+            className="object-cover" 
+            priority
+            />
+        </motion.div>
+        
+        {/* Enhanced Overlay with Multiple Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60" />
+        
+        {/* Floating Particles Effect */}
+        <div className="absolute inset-0 overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+            <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-orange-400 rounded-full opacity-60"
+                style={{
+                left: `${20 + i * 15}%`,
+                top: `${30 + i * 10}%`,
+                }}
+                animate={{
+                y: [0, -20, 0],
+                opacity: [0.6, 1, 0.6],
+                scale: [1, 1.2, 1],
+                }}
+                transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.3,
+                }}
+            />
+            ))}
         </div>
-
-        {/* Content */}
-        <div className="relative z-10">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold mb-6"
-          >
-            Ready to Capture Your Story?
-          </motion.h2>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed"
-          >
-            Let's create something beautiful together. Whether it's your wedding day, a special event, or professional portraits, we're here to turn your vision into stunning memories.
-          </motion.p>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
-          >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">500+</div>
-              <div className="text-blue-200">Happy Clients</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">1000+</div>
-              <div className="text-blue-200">Events Captured</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-2">5.0</div>
-              <div className="text-blue-200">Star Rating</div>
-            </div>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl"
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+            {/* Enhanced Header Section */}
+            <div className="text-center mb-16">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="inline-block mb-6"
             >
-              Book Your Session
-            </motion.button>
+                <span className="px-6 py-3 rounded-full bg-gradient-to-r from-orange-400/20 to-pink-400/20 border border-orange-400/30 text-orange-300 font-semibold text-sm backdrop-blur-sm shadow-lg">
+                ✨ Ready to Capture Your Story?
+                </span>
+            </motion.div>
             
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300"
+            <motion.h2 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent"
             >
-              Get a Quote
-            </motion.button>
-          </motion.div>
+                Let's Create
+            </motion.h2>
+            
+            <motion.p 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-light"
+            >
+                Let's create something beautiful together. Whether it's your wedding day, a special event, or professional portraits, we're here to turn your vision into stunning memories.
+            </motion.p>
+            </div>
 
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            {/* Enhanced CTA Buttons - Only Get a Quote */}
+            <motion.div
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-12 text-blue-200"
-          >
-            <p className="text-lg mb-2">Or reach out directly:</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-lg">
-              <span>📧 hello@infinitypixel.com</span>
-              <span>📱 +1 (555) 123-4567</span>
-              <span>📍 Available Worldwide</span>
-            </div>
-          </motion.div>
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="flex justify-center items-center mb-16"
+            >
+            <button
+                onClick={openModal}
+                className="group px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-white/20"
+            >   <div className='flex justify-center items-center w-full bg-lime-400 text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'>
+                Call For Offer
+                </div>
+            </button>
+            </motion.div>
 
-          {/* Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            {/* Enhanced Contact Section */}
+            <motion.div
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-16 pt-8 border-t border-blue-500"
-          >
-            <p className="text-blue-200 mb-4">Trusted by leading brands and venues</p>
-            <div className="flex justify-center items-center gap-8 opacity-60">
-              <div className="text-2xl font-bold">🏛️</div>
-              <div className="text-2xl font-bold">💒</div>
-              <div className="text-2xl font-bold">🏨</div>
-              <div className="text-2xl font-bold">🎭</div>
-              <div className="text-2xl font-bold">🎨</div>
-            </div>
-          </motion.div>
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="text-center"
+            >
+            </motion.div>
         </div>
-      </div>
+
+        </motion.div>
+
+        <motion.div className='relative bottom-12 left-10 justify-self-start items-center'>
+            <div className='bg-white w-[250px] text-black px-8 py-4 rounded-xl border-2 border-black font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 hover:cursor-pointer'>
+                <button 
+                    onClick={openModal}
+                    className='flex justify-center items-center w-full'
+                >
+                    Book Your Session
+                </button>
+            </div>
+        </motion.div>
+        
+        {/* Contact Form Modal */}
+        <ContactFormModal isOpen={isModalOpen} onClose={closeModal} />
     </motion.section>
   );
 }

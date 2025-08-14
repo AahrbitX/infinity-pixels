@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+// import ContactFormModal from './ContactFormModal';
 // import { CheckIcon } from '@heroicons/react/24/outline';
 
 export type Package = {
@@ -12,6 +14,11 @@ export type Package = {
 };
 
 export default function Packages({ id }: { id?: string }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const packages: Package[] = [
     {
       id: 1,
@@ -104,7 +111,7 @@ export default function Packages({ id }: { id?: string }) {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className={`relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 ${
+              className={`relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 flex flex-col ${
                 pkg.popular 
                   ? 'border-blue-500 shadow-blue-100' 
                   : 'border-gray-200'
@@ -129,7 +136,7 @@ export default function Packages({ id }: { id?: string }) {
               </div>
 
               {/* Features List */}
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 flex-grow">
                 {pkg.features.map((feature, featureIndex) => (
                   <motion.li
                     key={featureIndex}
@@ -146,20 +153,24 @@ export default function Packages({ id }: { id?: string }) {
               </ul>
 
               {/* CTA Button */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 ${
+              <button
+                // onClick={openModal}
+                // whileHover={{ scale: 1.05 }}
+                // whileTap={{ scale: 0.95 }}
+                // className={}
+              >
+                <div className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 mt-auto ${
                   pkg.popular
                     ? 'bg-blue-500 text-white hover:bg-blue-600'
                     : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                }`}
-              >
-                {pkg.cta}
-              </motion.button>
+                }`}>{pkg.cta}</div>
+              </button>
             </motion.div>
           ))}
         </div>
+        
+        {/* Contact Form Modal */}
+        {/* <ContactFormModal isOpen={isModalOpen} onClose={closeModal} /> */}
       </div>
     </motion.section>
   );

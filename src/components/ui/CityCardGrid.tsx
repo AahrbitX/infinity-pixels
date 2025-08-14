@@ -16,7 +16,7 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
       viewport={{ once: true }} 
       className="py-20 flex flex-col items-center justify-center"
     >
-      <div className="flex gap-16 overflow-x-auto pb-4">
+      <div className="flex gap-16 px-10 h-[450px] justify-center items-center">
         {cities.map((c, i) => {
           const isExpanded = hoveredIndex === i;
           const expandDirection = i === 1 ? "right" : "left"; // First and last expand left, middle expands right
@@ -54,7 +54,7 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
               {/* Content */}
               <div className="relative z-[1] h-full flex flex-col justify-end p-8 text-white">
                 <motion.h4 
-                  className="text-2xl font-bold mb-4 leading-tight"
+                  className="text-xl font-bold mb-4 leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

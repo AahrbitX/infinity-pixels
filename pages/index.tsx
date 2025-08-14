@@ -12,6 +12,8 @@ import Packages from '@/components/ui/Packages';
 import Testimonials from '@/components/ui/Testimonials';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import FAQ from '@/components/ui/FAQ';
+// import ContactForm from '@/components/ui/ContactForm';
 import type React from 'react';
 
 type Theme = {
@@ -78,11 +80,12 @@ export default function Home({ theme, content }: Props) {
         />
         <AboutSection />
         <FeatureTeasers id="features"/>
-        <CityCardGrid id="locations" cities={content.cities} />
-        <Packages id="packages" />
-        <Testimonials id="testimonials" />
-        <CallToAction id="cta" />
-        {/* <Footer /> */}
+        <CityCardGrid id="locations" cities={content.cities}/>
+        <Packages id="packages"/>
+        <Testimonials id="testimonials"/>
+        <CallToAction id="cta"/>
+        <FAQ id="faq"/>
+        <Footer />
       </main>
       <ScrollToTop />
     </ErrorBoundary>

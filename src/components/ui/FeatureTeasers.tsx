@@ -23,14 +23,12 @@ export default function Gallery({ id }: { id?: string }) {
     { src: '/images/weding.jpg', alt: 'Wedding ceremony', title: 'Ceremony' },
   ];
 
-  // Calculate the total height needed for seamless loop
-  const imageHeight = 280; // Increased from 192px to 280px (h-70)
+  // Calculate proper dimensions for seamless scrolling
+  const imageHeight = 350; // Height of each image
+  const gapSize = 16; // Gap between images (gap-4 = 16px)
   const totalImages = galleryImages.length;
-  const totalHeight = totalImages * imageHeight;
-
-  // For minimal scrolling, we'll use a smaller scroll distance
-  const scrollDistance = 200; // Reduced from full height to just 200px
-
+  const totalContentHeight = totalImages * imageHeight + (totalImages - 1) * gapSize;
+  
   // For seamless loop, we need to duplicate images and calculate proper animation values
   // The animation should move exactly the height of one complete set of images
   const duplicatedImages = [...galleryImages, ...galleryImages, ...galleryImages];
@@ -44,27 +42,33 @@ export default function Gallery({ id }: { id?: string }) {
       className="py-12 scroll-mt-28"
     >
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Gallery</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Gallery</h2>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
           Explore our stunning photography collection with infinite scrolling gallery
         </p>
       </div>
 
       <div className="relative w-full h-[800px] mx-auto overflow-hidden">
+        {/* Top Gradient Overlay - Fades images in from top */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+        
+        {/* Bottom Gradient Overlay - Fades images out to bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+        
         {/* Column 1 - Scrolls Up Continuously */}
         <div className="absolute left-0 top-0 w-1/5 h-full overflow-hidden">
           <motion.div
             className="flex flex-col gap-4 p-2"
-            animate={{ y: [0, -scrollDistance] }}
+            animate={{ y: [0, -totalContentHeight] }}
             transition={{
-              duration: 45,
+              duration: 75,
               repeat: Infinity,
               ease: "linear"
             }}
           >
             {duplicatedImages.map((image, index) => (
               <div key={`col1-${index}`} className="group">
-                <div className="relative h-70 rounded-xl overflow-hidden shadow-lg">
+                <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                   <Image 
                     src={image.src} 
                     alt={image.alt} 
@@ -84,16 +88,16 @@ export default function Gallery({ id }: { id?: string }) {
         <div className="absolute left-[20%] top-0 w-1/5 h-full overflow-hidden">
           <motion.div
             className="flex flex-col gap-4 p-2"
-            animate={{ y: [-scrollDistance, 0] }}
+            animate={{ y: [-totalContentHeight, 0] }}
             transition={{
-              duration: 50,
+              duration: 75,
               repeat: Infinity,
               ease: "linear"
             }}
           >
             {duplicatedImages.map((image, index) => (
               <div key={`col2-${index}`} className="group">
-                <div className="relative h-70 rounded-xl overflow-hidden shadow-lg">
+                <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                   <Image 
                     src={image.src} 
                     alt={image.alt} 
@@ -113,16 +117,16 @@ export default function Gallery({ id }: { id?: string }) {
         <div className="absolute left-[40%] top-0 w-1/5 h-full overflow-hidden">
           <motion.div
             className="flex flex-col gap-4 p-2"
-            animate={{ y: [0, -scrollDistance] }}
+            animate={{ y: [0, -totalContentHeight] }}
             transition={{
-              duration: 40,
+              duration: 65,
               repeat: Infinity,
               ease: "linear"
             }}
           >
             {duplicatedImages.map((image, index) => (
               <div key={`col3-${index}`} className="group">
-                <div className="relative h-70 rounded-xl overflow-hidden shadow-lg">
+                <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                   <Image 
                     src={image.src} 
                     alt={image.alt} 
@@ -142,16 +146,16 @@ export default function Gallery({ id }: { id?: string }) {
         <div className="absolute left-[60%] top-0 w-1/5 h-full overflow-hidden">
           <motion.div
             className="flex flex-col gap-4 p-2"
-            animate={{ y: [-scrollDistance, 0] }}
+            animate={{ y: [-totalContentHeight, 0] }}
             transition={{
-              duration: 55,
+              duration: 70,
               repeat: Infinity,
               ease: "linear"
             }}
           >
             {duplicatedImages.map((image, index) => (
               <div key={`col4-${index}`} className="group">
-                <div className="relative h-70 rounded-xl overflow-hidden shadow-lg">
+                <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                   <Image 
                     src={image.src} 
                     alt={image.alt} 
@@ -171,16 +175,16 @@ export default function Gallery({ id }: { id?: string }) {
         <div className="absolute left-[80%] top-0 w-1/5 h-full overflow-hidden">
           <motion.div
             className="flex flex-col gap-4 p-2"
-            animate={{ y: [0, -scrollDistance] }}
+            animate={{ y: [0, -totalContentHeight] }}
             transition={{
-              duration: 47,
+              duration: 65,
               repeat: Infinity,
               ease: "linear"
             }}
           >
             {duplicatedImages.map((image, index) => (
               <div key={`col5-${index}`} className="group">
-                <div className="relative h-70 rounded-xl overflow-hidden shadow-lg">
+                <div className="relative h-[350px] rounded-xl overflow-hidden shadow-lg">
                   <Image 
                     src={image.src} 
                     alt={image.alt} 
