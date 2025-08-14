@@ -2,8 +2,14 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
 import ContactFormModal from './ContactFormModal';
+import { CallToActionContent } from '@/lib/content';
 
-export default function CallToAction({ id }: { id?: string }) {
+interface CallToActionProps {
+  id?: string;
+  content: CallToActionContent;
+}
+
+export default function CallToAction({ id, content }: CallToActionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -25,7 +31,7 @@ export default function CallToAction({ id }: { id?: string }) {
             className="absolute inset-0"
         >
             <Image 
-            src="/images/camera.jpg" 
+            src={content.backgroundImage || "/images/camera.jpg"} 
             alt="Call to Action Background" 
             fill 
             className="object-cover" 
@@ -73,7 +79,7 @@ export default function CallToAction({ id }: { id?: string }) {
                 className="inline-block mb-6"
             >
                 <span className="px-6 py-3 rounded-full bg-gradient-to-r from-orange-400/20 to-pink-400/20 border border-orange-400/30 text-orange-300 font-semibold text-sm backdrop-blur-sm shadow-lg">
-                ✨ Ready to Capture Your Story?
+                ✨ Ready to Get Started?
                 </span>
             </motion.div>
             
@@ -84,7 +90,7 @@ export default function CallToAction({ id }: { id?: string }) {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-orange-100 to-white bg-clip-text text-transparent"
             >
-                Let's Create
+                {content.title}
             </motion.h2>
             
             <motion.p 
@@ -94,11 +100,11 @@ export default function CallToAction({ id }: { id?: string }) {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-light"
             >
-                Let's create something beautiful together. Whether it's your wedding day, a special event, or professional portraits, we're here to turn your vision into stunning memories.
+                {content.description}
             </motion.p>
             </div>
 
-            {/* Enhanced CTA Buttons - Only Get a Quote */}
+            {/* Enhanced CTA Buttons */}
             <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -106,13 +112,14 @@ export default function CallToAction({ id }: { id?: string }) {
             transition={{ duration: 0.8, delay: 1.0 }}
             className="flex justify-center items-center mb-16"
             >
-            <button
-                onClick={openModal}
+            <a
+                href={content.buttonHref}
                 className="group px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-white/20"
-            >   <div className='flex justify-center items-center w-full bg-lime-400 text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'>
-                Call For Offer
+            >   
+                <div className='flex justify-center items-center w-full bg-lime-400 text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'>
+                {content.buttonText}
                 </div>
-            </button>
+            </a>
             </motion.div>
 
             {/* Enhanced Contact Section */}

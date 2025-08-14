@@ -2,92 +2,24 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
+import { PortfolioContent } from '@/lib/content';
 
-export type GalleryImage = {
-  src: string;
-  alt: string;
-  title: string;
-  instagramUrl?: string;
-};
+interface PortfolioProps {
+  id?: string;
+  content: PortfolioContent;
+}
 
-export default function Gallery({ id }: { id?: string }) {
+export default function Portfolio({ id, content }: PortfolioProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const galleryImages: GalleryImage[] = [
-    { 
-      src: '/images/camera.jpg', 
-      alt: 'Professional camera setup', 
-      title: 'Camera Setup',
-      instagramUrl: 'https://www.instagram.com/p/example1/'
-    },
-    { 
-      src: '/images/wedding.jpg', 
-      alt: 'Wedding photography', 
-      title: 'Wedding',
-      instagramUrl: 'https://www.instagram.com/p/example2/'
-    },
-    { 
-      src: '/images/weding.jpg', 
-      alt: 'Wedding ceremony', 
-      title: 'Ceremony',
-      instagramUrl: 'https://www.instagram.com/p/example3/'
-    },
-    { 
-      src: '/images/camera.jpg', 
-      alt: 'Professional camera setup', 
-      title: 'Camera Setup',
-      instagramUrl: 'https://www.instagram.com/p/example4/'
-    },
-    { 
-      src: '/images/wedding.jpg', 
-      alt: 'Wedding photography', 
-      title: 'Wedding',
-      instagramUrl: 'https://www.instagram.com/p/example5/'
-    },
-    { 
-      src: '/images/weding.jpg', 
-      alt: 'Wedding ceremony', 
-      title: 'Ceremony',
-      instagramUrl: 'https://www.instagram.com/p/example6/'
-    },
-    { 
-      src: '/images/camera.jpg', 
-      alt: 'Professional camera setup', 
-      title: 'Camera Setup',
-      instagramUrl: 'https://www.instagram.com/p/example7/'
-    },
-    { 
-      src: '/images/wedding.jpg', 
-      alt: 'Wedding photography', 
-      title: 'Wedding',
-      instagramUrl: 'https://www.instagram.com/p/example8/'
-    },
-    { 
-      src: '/images/weding.jpg', 
-      alt: 'Wedding ceremony', 
-      title: 'Ceremony',
-      instagramUrl: 'https://www.instagram.com/p/example9/'
-    },
-    { 
-      src: '/images/camera.jpg', 
-      alt: 'Professional camera setup', 
-      title: 'Camera Setup',
-      instagramUrl: 'https://www.instagram.com/p/example10/'
-    },
-    { 
-      src: '/images/wedding.jpg', 
-      alt: 'Wedding photography', 
-      title: 'Wedding',
-      instagramUrl: 'https://www.instagram.com/p/example11/'
-    },
-    { 
-      src: '/images/weding.jpg', 
-      alt: 'Wedding ceremony', 
-      title: 'Ceremony',
-      instagramUrl: 'https://www.instagram.com/p/example12/'
-    },
-  ];
+  // Convert portfolio items to gallery format
+  const galleryImages = content.items.map(item => ({
+    src: item.image,
+    alt: item.description,
+    title: item.title,
+    link: item.link
+  }));
 
   // Calculate proper dimensions for seamless scrolling
   const imageHeight = 350; // Height of each image
@@ -123,9 +55,9 @@ export default function Gallery({ id }: { id?: string }) {
     }
   }, [selectedImageIndex, galleryImages.length]);
 
-  const openInstagram = useCallback(() => {
-    if (selectedImageIndex !== null && galleryImages[selectedImageIndex]?.instagramUrl) {
-      window.open(galleryImages[selectedImageIndex].instagramUrl, '_blank');
+  const openLink = useCallback(() => {
+    if (selectedImageIndex !== null && galleryImages[selectedImageIndex]?.link) {
+      window.open(galleryImages[selectedImageIndex].link, '_blank');
     }
   }, [selectedImageIndex, galleryImages]);
 
@@ -189,9 +121,9 @@ export default function Gallery({ id }: { id?: string }) {
       className="py-12 scroll-mt-28"
     >
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Gallery</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{content.title}</h2>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Explore our stunning photography collection with infinite scrolling gallery
+          {content.description}
         </p>
       </div>
 
@@ -373,12 +305,12 @@ export default function Gallery({ id }: { id?: string }) {
                 <X size={24} />
               </button>
 
-              {/* Instagram Button */}
-              {galleryImages[selectedImageIndex]?.instagramUrl && (
+              {/* Link Button */}
+              {galleryImages[selectedImageIndex]?.link && (
                 <button
-                  onClick={openInstagram}
+                  onClick={openLink}
                   className="absolute top-4 right-16 z-10 p-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors"
-                  title="View on Instagram"
+                  title="View Project"
                 >
                   <Instagram size={24} />
                 </button>

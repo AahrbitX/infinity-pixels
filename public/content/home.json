@@ -19,6 +19,20 @@
     "ctaLabel": "Explore Goodies",
     "ctaHref": "#goodies"
   },
+  "about": {
+    "tagline": "Our Story",
+    "title": "Crafting the Perfect Experience",
+    "description": "We believe that exceptional coffee is more than just a beverage—it's an art form, a ritual, and a moment of pure enjoyment. Every cup tells a story of passion, precision, and the pursuit of perfection.",
+    "image": "/images/camera.jpg",
+    "stats": [
+      { "value": "15+", "label": "Years of Experience" },
+      { "value": "50+", "label": "Unique Blends" }
+    ],
+    "floatingCard": {
+      "title": "Fresh Daily",
+      "subtitle": "Roasted to order"
+    }
+  },
   "features": [
     {
       "heading": "From Greenies to Delight.",
@@ -32,11 +46,198 @@
       "media": "/images/wedding.jpg"
     }
   ],
-  "cities": [
+  "services": [
     { "name": "Web Development", "body": "Custom websites and web applications built with modern technologies and best practices.", "image": "/images/camera.jpg" },
     { "name": "Mobile Development", "body": "Native and cross-platform mobile applications for iOS and Android platforms.", "image": "/images/wedding.jpg" },
     { "name": "UI/UX Design", "body": "Beautiful and intuitive user interfaces designed for optimal user experience and engagement.", "image": "/images/camera.jpg" }
-  ]
+  ],
+  "trustedBy": {
+    "title": "Trusted by Industry Leaders",
+    "description": "We're proud to work with leading companies and organizations that trust us with their digital presence and brand identity.",
+    "logos": [
+      "/images/camera.jpg",
+      "/images/wedding.jpg",
+      "/images/camera.jpg",
+      "/images/wedding.jpg",
+      "/images/camera.jpg"
+    ]
+  },
+  "portfolio": {
+    "title": "Our Latest Projects",
+    "description": "Check out some of our recent work that showcases our expertise and creativity.",
+    "categories": ["All", "Web", "Mobile", "Design"],
+    "items": [
+      {
+        "title": "E-commerce Platform",
+        "category": "Web",
+        "image": "/images/camera.jpg",
+        "description": "A modern e-commerce solution with seamless checkout experience.",
+        "link": "#project1"
+      },
+      {
+        "title": "Fitness App",
+        "category": "Mobile",
+        "image": "/images/wedding.jpg",
+        "description": "An intuitive fitness tracking application for iOS and Android.",
+        "link": "#project2"
+      },
+      {
+        "title": "Corporate Website",
+        "category": "Web",
+        "image": "/images/camera.jpg",
+        "description": "A professional website with custom CMS integration.",
+        "link": "#project3"
+      },
+      {
+        "title": "Brand Identity",
+        "category": "Design",
+        "image": "/images/wedding.jpg",
+        "description": "Complete brand identity design including logo and brand guidelines.",
+        "link": "#project4"
+      }
+    ]
+  },
+  "packages": {
+    "title": "Our Packages",
+    "description": "Choose the perfect package that suits your needs and budget.",
+    "items": [
+      {
+        "title": "Basic",
+        "price": "$499",
+        "duration": "one-time",
+        "features": [
+          "Responsive design",
+          "5 pages",
+          "Basic SEO",
+          "Contact form",
+          "1 month support"
+        ],
+        "ctaText": "Get Started",
+        "ctaHref": "#contact"
+      },
+      {
+        "title": "Standard",
+        "price": "$999",
+        "duration": "one-time",
+        "features": [
+          "Responsive design",
+          "10 pages",
+          "Advanced SEO",
+          "Contact form",
+          "E-commerce integration",
+          "3 months support"
+        ],
+        "popular": true,
+        "ctaText": "Get Started",
+        "ctaHref": "#contact"
+      },
+      {
+        "title": "Premium",
+        "price": "$1999",
+        "duration": "one-time",
+        "features": [
+          "Responsive design",
+          "Unlimited pages",
+          "Advanced SEO",
+          "Custom functionality",
+          "E-commerce integration",
+          "12 months support",
+          "Priority support"
+        ],
+        "ctaText": "Get Started",
+        "ctaHref": "#contact"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "description": "Hear from our satisfied clients about their experience working with us.",
+    "items": [
+      {
+        "name": "John Smith",
+        "position": "CEO",
+        "company": "Tech Solutions",
+        "image": "/images/camera.jpg",
+        "quote": "Working with this team was a pleasure. They delivered a high-quality website that exceeded our expectations.",
+        "rating": 5
+      },
+      {
+        "name": "Sarah Johnson",
+        "position": "Marketing Director",
+        "company": "Fashion Brand",
+        "image": "/images/wedding.jpg",
+        "quote": "The mobile app they developed for us has significantly increased our customer engagement and sales.",
+        "rating": 5
+      },
+      {
+        "name": "David Williams",
+        "position": "Founder",
+        "company": "Startup Inc.",
+        "image": "/images/camera.jpg",
+        "quote": "I appreciate their attention to detail and commitment to delivering on time and within budget.",
+        "rating": 4
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Start Your Project?",
+    "description": "Contact us today to discuss your project requirements and get a free quote.",
+    "buttonText": "Get in Touch",
+    "buttonHref": "#contact",
+    "backgroundImage": "/images/camera.jpg"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Find answers to common questions about our services and process.",
+    "items": [
+      {
+        "question": "How long does a typical project take?",
+        "answer": "Project timelines vary depending on complexity and scope. A simple website might take 2-4 weeks, while a complex web application could take 2-6 months."
+      },
+      {
+        "question": "What is your payment structure?",
+        "answer": "We typically require a 50% deposit to start the project, with the remaining 50% due upon completion. For larger projects, we may establish a milestone-based payment schedule."
+      },
+      {
+        "question": "Do you provide ongoing maintenance?",
+        "answer": "Yes, we offer various maintenance packages to keep your website or application running smoothly after launch."
+      },
+      {
+        "question": "Can you help with content creation?",
+        "answer": "We can provide basic content structure and guidance, but we recommend working with a professional copywriter for best results."
+      },
+      {
+        "question": "Do you offer hosting services?",
+        "answer": "While we don't provide hosting directly, we can recommend reliable hosting providers and help with setup and configuration."
+      }
+    ]
+  },
+  "footer": {
+    "brand": {
+      "title": "Botanical",
+      "description": "Our coffee doesn't have to taste that way. But it does. It's not your typical. It's unnecessarily good."
+    },
+    "quickLinks": [
+      { "label": "Home", "href": "/" },
+      { "label": "Portfolio", "href": "/portfolio" },
+      { "label": "About", "href": "#about" },
+      { "label": "Features", "href": "#features" }
+    ],
+    "contact": {
+      "address": "123 Coffee Street",
+      "phone": "+1 (555) 123-4567",
+      "email": "hello@botanical.com"
+    },
+    "social": [
+      { "platform": "Facebook", "url": "#", "icon": "facebook" },
+      { "platform": "Instagram", "url": "#", "icon": "instagram" },
+      { "platform": "Twitter", "url": "#", "icon": "twitter" }
+    ],
+    "copyright": "© 2023 Botanical. All rights reserved.",
+    "backgroundImage": "/images/camera.jpg"
+  },
+  "seo": {
+    "title": "Botanical - Unnecessarily Good Coffee",
+    "description": "Experience coffee like never before with Botanical's unnecessarily good blends and brews."
+  }
 }
-
-

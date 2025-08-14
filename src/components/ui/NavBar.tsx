@@ -2,15 +2,20 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import ThemeSwitcher from './ThemeSwitcher';
+import { NavItem } from '@/lib/content';
 
-export type NavItem = { label: string; href?: string; anchor?: string };
+interface NavBarProps {
+  items?: NavItem[];
+}
 
-export default function NavBar({ items = [] }: { items?: NavItem[] }) {
+export default function NavBar({ items = [] }: NavBarProps) {
   const [docked, setDocked] = useState(false);
   const [menuItems, setMenuItems] = useState<NavItem[]>(items);
   const router = useRouter();
   const [currentAnchor, setCurrentAnchor] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  
   // Load nav items from JSON if not provided
   useEffect(() => {
     // Always hydrate menu from JSON so navbar works across all pages
@@ -137,143 +142,145 @@ export default function NavBar({ items = [] }: { items?: NavItem[] }) {
       className={`flex justify-center items-start ${containerClass}`}
       style={{ position: 'fixed' as const }}
     >
-          {/* Mobile bar */}
-          <div className={navClassMobile}>
-            <div className="flex items-center justify-self-end text-black">
-              <button
-                aria-label="Toggle navigation"
-                className="p-2 -ml-1"
-                onClick={() => setIsOpen((v) => !v)}
-              >
-                {/* simple hamburger */}
-                <span className="block w-5 h-0.5 bg-black mb-1" />
-                <span className="block w-5 h-0.5 bg-black mb-1" />
-                <span className="block w-5 h-0.5 bg-black" />
-              </button>
-            </div>
+      {/* Mobile bar */}
+      <div className={navClassMobile}>
+        <div className="flex items-center justify-between bg-white text-black rounded-lg px-3 py-2 shadow-md">
+          <button
+            aria-label="Toggle navigation"
+            className="p-2"
+            onClick={() => setIsOpen((v) => !v)}
+          >
+            {/* simple hamburger */}
+            <span className="block w-5 h-0.5 bg-black mb-1" />
+            <span className="block w-5 h-0.5 bg-black mb-1" />
+            <span className="block w-5 h-0.5 bg-black" />
+          </button>
+          
+          {/* Add theme switcher to mobile nav */}
+          <ThemeSwitcher />
+        </div>
 
-            <motion.div
-              initial={false}
-              animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-              className="overflow-hidden mt-2 rounded-2xl bg-white/95 text-black border border-gray-200"
-            >
-              <ul className="flex flex-col divide-y divide-gray-200">
-                {(menuItems || []).map((it) => {
-                  const href = it.anchor ? `/#${it.anchor}` : it.href ?? '#';
-                  const isActiveRoute = !!it.href && router.pathname === it.href && !(router.pathname === '/' && currentAnchor);
-                  const isActiveAnchor = router.pathname === '/' && !!it.anchor && currentAnchor === it.anchor;
-                  const isActive = isActiveRoute || isActiveAnchor;
-                  return (
-                    <li key={it.label}>
-                      <Link
-                        href={href}
-                        scroll={true}
-                        onClick={(e) => {
-                          setIsOpen(false);
-                          if (it.anchor) {
-                            e.preventDefault();
-                            if (router.pathname !== '/') {
-                              // Navigate to home page with hash, then let the hash handler do the scrolling
-                              router.push(`/#${it.anchor as string}`);
-                            } else {
-                              // Already on home page, just scroll to section
-                              const el = document.getElementById(it.anchor as string);
-                              if (el) {
-                                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                setCurrentAnchor(it.anchor as string);
-                              }
-                            }
-                          } else if (it.href === '/') {
-                            setCurrentAnchor(null);
+        <motion.div
+          initial={false}
+          animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+          className="overflow-hidden mt-2 rounded-2xl bg-white/95 text-black border border-gray-200"
+        >
+          <ul className="flex flex-col divide-y divide-gray-200">
+            {(menuItems || []).map((it) => {
+              const href = it.anchor ? `/#${it.anchor}` : it.href ?? '#';
+              const isActiveRoute = !!it.href && router.pathname === it.href && !(router.pathname === '/' && currentAnchor);
+              const isActiveAnchor = router.pathname === '/' && !!it.anchor && currentAnchor === it.anchor;
+              const isActive = isActiveRoute || isActiveAnchor;
+              return (
+                <li key={it.label}>
+                  <Link
+                    href={href}
+                    scroll={true}
+                    onClick={(e) => {
+                      setIsOpen(false);
+                      if (it.anchor) {
+                        e.preventDefault();
+                        if (router.pathname !== '/') {
+                          // Navigate to home page with hash, then let the hash handler do the scrolling
+                          router.push(`/#${it.anchor as string}`);
+                        } else {
+                          // Already on home page, just scroll to section
+                          const el = document.getElementById(it.anchor as string);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            setCurrentAnchor(it.anchor as string);
                           }
-                        }}
-                        className={`block px-4 py-3 transition-all duration-300 ease-out nav-link ${isActive ? 'bg-gray-100 border-l-4 border-lime-300' : 'hover:bg-gray-50'}`}
-                      >
-                        <span className="inline-flex items-center gap-2">
-                          {isActive && (
-                            <motion.span 
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ duration: 0.2, ease: "easeOut" }}
-                              className="w-2 h-2 rounded-full bg-lime-300"
-                            />
-                          )}
-                          {it.label}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Desktop bar */}
-          <nav className={navClassDesktop}>
-
-          <div className="flex items-center h-15">
-            <ul className={`relative hidden md:flex justify-center gap-6 list-none m-0 p-0 ${docked ? 'py-3 mx-auto' : ''}`}>
-              {(menuItems || []).map((it) => {
-                const href = it.anchor ? `/#${it.anchor}` : it.href ?? '#';
-                const isActiveRoute = !!it.href && router.pathname === it.href && !(router.pathname === '/' && currentAnchor);
-                const isActiveAnchor = router.pathname === '/' && !!it.anchor && currentAnchor === it.anchor;
-                const isActive = isActiveRoute || isActiveAnchor;
-                return (
-                  <li key={it.label} className="relative px-1 py-0.5">
-                    <Link
-                      href={href}
-                      scroll={true}
-                      onClick={(e) => {
-                        if (it.anchor) {
-                          e.preventDefault();
-                          if (router.pathname !== '/') {
-                            // Navigate to home page with hash, then let the hash handler do the scrolling
-                            router.push(`/#${it.anchor as string}`);
-                          } else {
-                            // Already on home page, just scroll to section
-                            const el = document.getElementById(it.anchor as string);
-                            if (el) {
-                              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                              setCurrentAnchor(it.anchor as string);
-                            }
-                          }
-                        } else if (it.href === '/') {
-                          // Allow route navigation; clear anchor highlight immediately
-                          setCurrentAnchor(null);
                         }
-                      }}
-                      className={`transition-all duration-300 ease-out px-3 py-1 rounded-full nav-link ${isActive ? 'bg-white/15 text-white scale-105' : 'text-white/80 hover:text-white hover:scale-105'}`}
-                    >
-                      <span className="inline-flex items-center gap-2">
-                        {isActive && (
-                          <motion.span 
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
-                            className="w-2 h-2 rounded-full bg-lime-300"
-                          />
-                        )}
-                        {it.label}
-                      </span>
-                    </Link>
-                    {isActive && (
-                      <motion.div 
-                        layoutId="nav-pill" 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="absolute inset-0 -z-10 rounded-full bg-white/10"
-                      />
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-    </nav>
-    </motion.div>
+                      } else if (it.href === '/') {
+                        setCurrentAnchor(null);
+                      }
+                    }}
+                    className={`block px-4 py-3 transition-all duration-300 ease-out nav-link ${isActive ? 'bg-gray-100 border-l-4 border-lime-300' : 'hover:bg-gray-50'}`}
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      {isActive && (
+                        <motion.span 
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="w-2 h-2 rounded-full bg-lime-300"
+                        />
+                      )}
+                      {it.label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </motion.div>
+      </div>
 
+      {/* Desktop bar */}
+      <nav className={navClassDesktop}>
+        <div className="flex items-center justify-between h-15 px-8">
+          <ul className={`relative hidden md:flex justify-center gap-6 list-none m-0 p-0 ${docked ? 'py-3 mx-auto' : ''}`}>
+            {(menuItems || []).map((it) => {
+              const href = it.anchor ? `/#${it.anchor}` : it.href ?? '#';
+              const isActiveRoute = !!it.href && router.pathname === it.href && !(router.pathname === '/' && currentAnchor);
+              const isActiveAnchor = router.pathname === '/' && !!it.anchor && currentAnchor === it.anchor;
+              const isActive = isActiveRoute || isActiveAnchor;
+              return (
+                <li key={it.label} className="relative px-1 py-0.5">
+                  <Link
+                    href={href}
+                    scroll={true}
+                    onClick={(e) => {
+                      if (it.anchor) {
+                        e.preventDefault();
+                        if (router.pathname !== '/') {
+                          // Navigate to home page with hash, then let the hash handler do the scrolling
+                          router.push(`/#${it.anchor as string}`);
+                        } else {
+                          // Already on home page, just scroll to section
+                          const el = document.getElementById(it.anchor as string);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            setCurrentAnchor(it.anchor as string);
+                          }
+                        }
+                      } else if (it.href === '/') {
+                        // Allow route navigation; clear anchor highlight immediately
+                        setCurrentAnchor(null);
+                      }
+                    }}
+                    className={`transition-all duration-300 ease-out px-3 py-1 rounded-full nav-link ${isActive ? 'bg-white/15 text-black scale-105' : 'text-black/80 hover:text-black hover:scale-105'}`}
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      {isActive && (
+                        <motion.span 
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="w-2 h-2 rounded-full bg-lime-300"
+                        />
+                      )}
+                      {it.label}
+                    </span>
+                  </Link>
+                  {isActive && (
+                    <motion.div 
+                      layoutId="nav-pill" 
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="absolute inset-0 -z-10 rounded-full bg-black/10"
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          
+          {/* Add theme switcher to desktop nav */}
+          <ThemeSwitcher className="hidden md:block" />
+        </div>
+      </nav>
+    </motion.div>
   );
 }
-
-

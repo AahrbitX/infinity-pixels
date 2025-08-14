@@ -1,74 +1,13 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { TestimonialContent } from '@/lib/content';
 
-export type Testimonial = {
-  id: number;
-  name: string;
-  role: string;
-  company: string;
-  rating: number;
-  text: string;
-  photo: string;
-};
+interface TestimonialsProps {
+  id?: string;
+  content: TestimonialContent;
+}
 
-export default function Testimonials({ id }: { id?: string }) {
-  const testimonials: Testimonial[] = [
-    {
-      id: 1,
-      name: "Sarah Johnson",
-      role: "Bride",
-      company: "Wedding Client",
-      rating: 5,
-      text: "Absolutely incredible work! Our wedding photos captured every magical moment perfectly. The attention to detail and artistic vision exceeded our expectations.",
-      photo: "/images/wedding.jpg"
-    },
-    {
-      id: 2,
-      name: "Michael Chen",
-      role: "CEO",
-      company: "TechCorp",
-      rating: 5,
-      text: "Professional, creative, and delivered exactly what we needed for our corporate event. The team was punctual and the results were outstanding.",
-      photo: "/images/camera.jpg"
-    },
-    {
-      id: 3,
-      name: "Emma Rodriguez",
-      role: "Model",
-      company: "Fashion Industry",
-      rating: 5,
-      text: "Working with this photographer was a dream! The portrait session was so comfortable and the final images are absolutely stunning.",
-      photo: "/images/weding.jpg"
-    },
-    {
-      id: 4,
-      name: "David Thompson",
-      role: "Event Manager",
-      company: "EventPro",
-      rating: 5,
-      text: "Exceptional service from start to finish. They captured our event beautifully and delivered the photos ahead of schedule.",
-      photo: "/images/camera.jpg"
-    },
-    {
-      id: 5,
-      name: "Lisa Park",
-      role: "Marketing Director",
-      company: "BrandCo",
-      rating: 5,
-      text: "The product photography elevated our brand significantly. Professional, creative, and delivered exactly what we envisioned.",
-      photo: "/images/wedding.jpg"
-    },
-    {
-      id: 6,
-      name: "James Wilson",
-      role: "Real Estate Agent",
-      company: "PropertyMax",
-      rating: 5,
-      text: "Outstanding real estate photography that helps our properties sell faster. The quality and attention to detail is unmatched.",
-      photo: "/images/weding.jpg"
-    }
-  ];
-
+export default function Testimonials({ id, content }: TestimonialsProps) {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <svg
@@ -99,7 +38,7 @@ export default function Testimonials({ id }: { id?: string }) {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
           >
-            What Our Clients Say
+            {content.title}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -108,15 +47,15 @@ export default function Testimonials({ id }: { id?: string }) {
             transition={{ delay: 0.1 }}
             className="text-xl text-gray-600 max-w-3xl mx-auto"
           >
-            Don't just take our word for it. Here's what our amazing clients have to say about their experience with us.
+            {content.description}
           </motion.p>
         </div>
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {content.items.map((testimonial, index) => (
             <motion.div
-              key={testimonial.id}
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -125,14 +64,6 @@ export default function Testimonials({ id }: { id?: string }) {
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {/* Rating */}
-              {/* <div className="relative w-full h-[200px] rounded-lg overflow-hidden mr-4 mb-4">
-                  <Image
-                    src={testimonial.photo}
-                    alt={testimonial.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div> */}
               <div className="flex items-center mb-4">
                 {renderStars(testimonial.rating)}
                 <span className="ml-2 text-sm text-gray-600">({testimonial.rating}.0)</span>
@@ -140,14 +71,14 @@ export default function Testimonials({ id }: { id?: string }) {
 
               {/* Testimonial Text */}
               <p className="text-gray-700 mb-6 leading-relaxed">
-                "{testimonial.text}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
 
               {/* Client Info */}
               <div className="flex items-center">
-              <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden mr-4 mb-4">
+                <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden mr-4 mb-4">
                   <Image
-                    src={testimonial.photo}
+                    src={testimonial.image}
                     alt={testimonial.name}
                     fill
                     className="object-cover"
@@ -155,7 +86,7 @@ export default function Testimonials({ id }: { id?: string }) {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  <p className="text-sm text-gray-600">{testimonial.position}</p>
                   <p className="text-xs text-gray-500">{testimonial.company}</p>
                 </div>
               </div>

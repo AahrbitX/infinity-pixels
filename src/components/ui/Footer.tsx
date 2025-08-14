@@ -1,16 +1,41 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FooterContent } from '@/lib/content';
 
-export default function Footer() {
+interface FooterProps {
+  content: FooterContent;
+}
+
+export default function Footer({ content }: FooterProps) {
   const currentYear = new Date().getFullYear();
+  const copyrightText = content.copyright.replace(/\d{4}/, currentYear.toString());
+  
+  // Social icons mapping
+  const socialIcons = {
+    facebook: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+    ),
+    instagram: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.718-1.297c-.875.807-2.026 1.297-3.323 1.297s-2.448-.49-3.323-1.297c-.807-.875-1.297-2.026-1.297-3.323s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323z"/>
+      </svg>
+    ),
+    twitter: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+      </svg>
+    )
+  };
 
   return (
     <footer className="relative flex justify-self-center text-white py-16">
       <div className="inverted-foot relative flex justify-self-center text-white">
         <div className="absolute inset-0">
           <Image 
-            src="/images/camera.jpg" 
+            src={content.backgroundImage} 
             alt="Footer Background" 
             fill 
             className="object-cover rounded-lg"
@@ -29,48 +54,24 @@ export default function Footer() {
               transition={{ delay: 0.1 }}
               className="col-span-1 md:col-span-2"
             >
-              <h3 className="text-2xl font-bold mb-4 text-orange-400">Botanical</h3>
+              <h3 className="text-2xl font-bold mb-4 text-orange-400">{content.brand.title}</h3>
               <p className="text-gray-300 mb-6 max-w-md">
-                Our coffee doesn't have to taste that way. But it does. It's not your typical. 
-                It's unnecessarily good.
+                {content.brand.description}
               </p>
               <div className="flex space-x-4">
                 {/* Social Media Icons */}
-                <motion.a
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-400 transition-colors"
-                  aria-label="Facebook"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </motion.a>
-                
-                <motion.a
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-400 transition-colors"
-                  aria-label="Instagram"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.718-1.297c-.875.807-2.026 1.297-3.323 1.297s-2.448-.49-3.323-1.297c-.807-.875-1.297-2.026-1.297-3.323s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323z"/>
-                  </svg>
-                </motion.a>
-                
-                <motion.a
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-400 transition-colors"
-                  aria-label="Twitter"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </motion.a>
+                {content.social.map((item, index) => (
+                  <motion.a
+                    key={index}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    href={item.url}
+                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-400 transition-colors"
+                    aria-label={item.platform}
+                  >
+                    {socialIcons[item.icon as keyof typeof socialIcons]}
+                  </motion.a>
+                ))}
               </div>
             </motion.div>
 
@@ -83,10 +84,16 @@ export default function Footer() {
             >
               <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link href="/" className="text-gray-300 hover:text-orange-400 transition-colors">Home</Link></li>
-                <li><Link href="/portfolio" className="text-gray-300 hover:text-orange-400 transition-colors">Portfolio</Link></li>
-                <li><Link href="#about" className="text-gray-300 hover:text-orange-400 transition-colors">About</Link></li>
-                <li><Link href="#features" className="text-gray-300 hover:text-orange-400 transition-colors">Features</Link></li>
+                {content.quickLinks.map((link, index) => (
+                  <li key={index}>
+                    <Link 
+                      href={link.anchor ? `#${link.anchor}` : link.href} 
+                      className="text-gray-300 hover:text-orange-400 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </motion.div>
 
@@ -99,9 +106,9 @@ export default function Footer() {
             >
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-gray-300">
-                <p>📍 123 Coffee Street</p>
-                <p>☎️ +1 (555) 123-4567</p>
-                <p>✉️ hello@botanical.com</p>
+                <p>📍 {content.contact.address}</p>
+                <p>☎️ {content.contact.phone}</p>
+                <p>✉️ {content.contact.email}</p>
               </div>
             </motion.div>
           </div>
@@ -114,7 +121,7 @@ export default function Footer() {
             transition={{ delay: 0.4 }}
             className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400"
           >
-            <p>&copy; {currentYear} Botanical. All rights reserved.</p>
+            <p>{copyrightText}</p>
           </motion.div>
         </div>
       </div>

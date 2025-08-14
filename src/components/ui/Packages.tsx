@@ -1,75 +1,19 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { PackageContent } from '@/lib/content';
 // import ContactFormModal from './ContactFormModal';
 // import { CheckIcon } from '@heroicons/react/24/outline';
 
-export type Package = {
-  id: number;
-  name: string;
-  price: string;
-  description: string;
-  features: string[];
-  popular?: boolean;
-  cta: string;
-};
+interface PackagesProps {
+  id?: string;
+  content: PackageContent;
+}
 
-export default function Packages({ id }: { id?: string }) {
+export default function Packages({ id, content }: PackagesProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const packages: Package[] = [
-    {
-      id: 1,
-      name: "Starter",
-      price: "$299",
-      description: "Perfect for small events and basic photography needs",
-      features: [
-        "2 hours of coverage",
-        "50 edited photos",
-        "Online gallery",
-        "Basic editing",
-        "Delivery within 5 days"
-      ],
-      cta: "Choose Starter"
-    },
-    {
-      id: 2,
-      name: "Professional",
-      price: "$599",
-      description: "Our most popular package for weddings and events",
-      features: [
-        "6 hours of coverage",
-        "200 edited photos",
-        "Online gallery",
-        "Advanced editing",
-        "Print rights",
-        "Delivery within 3 days",
-        "Engagement session"
-      ],
-      popular: true,
-      cta: "Choose Professional"
-    },
-    {
-      id: 3,
-      name: "Premium",
-      price: "$999",
-      description: "Comprehensive coverage for special occasions",
-      features: [
-        "Full day coverage (10 hours)",
-        "400 edited photos",
-        "Online gallery",
-        "Premium editing",
-        "Print rights",
-        "Same day delivery",
-        "Engagement session",
-        "Wedding album",
-        "Video highlights"
-      ],
-      cta: "Choose Premium"
-    }
-  ];
 
   return (
     <motion.section 
@@ -88,7 +32,7 @@ export default function Packages({ id }: { id?: string }) {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
           >
-            Choose Your Package
+            {content.title}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -97,15 +41,15 @@ export default function Packages({ id }: { id?: string }) {
             transition={{ delay: 0.1 }}
             className="text-xl text-gray-600 max-w-3xl mx-auto"
           >
-            We offer flexible packages to suit every need and budget. Choose the perfect option for your special day.
+            {content.description}
           </motion.p>
         </div>
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {packages.map((pkg, index) => (
+          {content.items.map((pkg, index) => (
             <motion.div
-              key={pkg.id}
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -128,11 +72,11 @@ export default function Packages({ id }: { id?: string }) {
 
               {/* Package Header */}
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{pkg.title}</h3>
                 <div className="mb-4">
                   <span className="text-4xl font-bold text-blue-600">{pkg.price}</span>
+                  <span className="text-lg text-gray-500 ml-2">/{pkg.duration}</span>
                 </div>
-                <p className="text-gray-600">{pkg.description}</p>
               </div>
 
               {/* Features List */}
@@ -153,18 +97,16 @@ export default function Packages({ id }: { id?: string }) {
               </ul>
 
               {/* CTA Button */}
-              <button
-                // onClick={openModal}
-                // whileHover={{ scale: 1.05 }}
-                // whileTap={{ scale: 0.95 }}
-                // className={}
-              >
-                <div className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 mt-auto ${
+              <a
+                href={pkg.ctaHref}
+                className={`w-full py-3 px-6 rounded-xl font-semibold transition-colors duration-300 mt-auto text-center ${
                   pkg.popular
                     ? 'bg-blue-500 text-white hover:bg-blue-600'
                     : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                }`}>{pkg.cta}</div>
-              </button>
+                }`}
+              >
+                {pkg.ctaText}
+              </a>
             </motion.div>
           ))}
         </div>

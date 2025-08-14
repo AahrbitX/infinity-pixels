@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { GetStaticProps } from 'next';
-// Tailwind now handles layout, no CSS module needed
 import NavBar from '@/components/ui/NavBar';
 import Hero from '@/components/ui/Hero';
 import AboutSection from '@/components/ui/AboutSection';
@@ -14,82 +13,56 @@ import Testimonials from '@/components/ui/Testimonials';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import FAQ from '@/components/ui/FAQ';
-// import ContactForm from '@/components/ui/ContactForm';
+import ThemeProvider from '@/components/ThemeProvider';
+import { HomeContent } from '@/lib/content';
+import { Theme } from '@/lib/theme';
 import type React from 'react';
-
-type Theme = {
-  colors: Record<string, string>;
-  fonts: {
-    body: string;
-    heading: string;
-  };
-};
-
-type HomeContent = {
-  nav: { label: string; href?: string }[];
-  hero: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    backgroundImage: string;
-    backgroundVideo?: string;
-    statLabel: string;
-    statBody: string;
-    statImage: string;
-    statStack?: string[];
-    ctaLabel: string;
-    ctaHref?: string;
-  };
-  features: Array<{ heading: string; body: string; media?: string; variant?: 'text' | 'media' }>;
-  cities: Array<{ name: string; body: string; image: string }>; // This will be used as services data
-};
 
 type Props = {
   theme: Theme;
   content: HomeContent;
 };
 
-export default function Home({ theme, content }: Props) {
-  const styleVars: React.CSSProperties & Record<`--${string}`, string> = {
-    "--color-primary": theme.colors.primary,
-    "--color-background": theme.colors.background,
-    "--color-foreground": theme.colors.foreground,
-    "--font-body": theme.fonts.body,
-    "--font-heading": theme.fonts.heading,
-  };
-
+export default function Home({ content }: Props) {
   return (
     <ErrorBoundary>
-      <Head>
-        <title>{content.hero.title}</title>
-        <meta name="description" content={content.hero.description} />
-      </Head>
-      <main className="flex flex-col gap-12 p-6" style={styleVars}>
-        <NavBar items={content.nav} />
-        <Hero
-          backgroundImage={content.hero.backgroundImage}
-          backgroundVideo={content.hero.backgroundVideo}
-          eyebrow={content.hero.eyebrow}
-          title={content.hero.title}
-          description={content.hero.description}
-          statLabel={content.hero.statLabel}
-          statBody={content.hero.statBody}
-          statImage={content.hero.statImage}
-          statStack={content.hero.statStack}
-          ctaLabel={content.hero.ctaLabel}
-          ctaHref={content.hero.ctaHref}
-        />
-        <AboutSection />
-        <TrustedBySection />
-        <FeatureTeasers id="features"/>
-        <ServiceSection id="services" services={content.cities} title="Our Services" description="Discover our comprehensive range of professional services designed to meet your needs"/>
-        <Packages id="packages"/>
-        <Testimonials id="testimonials"/>
-        <CallToAction id="cta"/>
-        <FAQ id="faq"/>
-        <Footer />
-      </main>
-      <ScrollToTop />
+      <ThemeProvider>
+        <Head>
+          <title>{content.seo.title}</title>
+          <meta name="description" content={content.seo.description} />
+        </Head>
+        <main className="flex flex-col gap-12 p-6">
+          <NavBar items={content.nav} />
+          <Hero
+            backgroundImage={content.hero.backgroundImage}
+            backgroundVideo={content.hero.backgroundVideo}
+            eyebrow={content.hero.eyebrow}
+            title={content.hero.title}
+            description={content.hero.description}
+            statLabel={content.hero.statLabel}
+            statBody={content.hero.statBody}
+            statImage={content.hero.statImage}
+            statStack={content.hero.statStack}
+            ctaLabel={content.hero.ctaLabel}
+            ctaHref={content.hero.ctaHref}
+          />
+          <AboutSection content={content.about} />
+          <TrustedBySection content={content.trustedBy} />
+          <FeatureTeasers id="features" content={content.portfolio} />
+          <ServiceSection 
+            id="services" 
+            services={content.services} 
+            title="Our Services" 
+            description="Discover our comprehensive range of professional services designed to meet your needs"
+          />
+          <Packages id="packages" content={content.packages} />
+          <Testimonials id="testimonials" content={content.testimonials} />
+          <CallToAction id="cta" content={content.cta} />
+          <FAQ id="faq" content={content.faq} />
+          <Footer content={content.footer} />
+        </main>
+        <ScrollToTop />
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }
@@ -103,5 +76,3 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const content = readJson(path.join(base, 'home.json'));
   return { props: { theme, content } };
 };
-
-
