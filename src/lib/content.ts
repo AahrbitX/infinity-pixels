@@ -5,17 +5,18 @@ export type NavItem = {
 };
 
 export type HeroContent = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  backgroundImage: string;
-  backgroundVideo?: string;
-  statLabel: string;
-  statBody: string;
-  statImage: string;
-  statStack?: string[];
-  ctaLabel: string;
-  ctaHref?: string;
+  slides: Array<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    backgroundImage: string;
+    backgroundVideo?: string;
+    statLabel: string;
+    statBody: string;
+    statImage: string;
+    ctaLabel: string;
+    ctaHref?: string;
+  }>;
 };
 
 export type Feature = {

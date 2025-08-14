@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import ThemeSwitcher from './ThemeSwitcher';
 import { NavItem } from '@/lib/content';
-import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor } from '@/lib/hooks/useThemeUtils';
+// import { useTheme } from '@/components/ThemeProvider';
+// import { useThemeColor } from '@/lib/hooks/useThemeUtils';
 
 interface NavBarProps {
   items?: NavItem[];
@@ -17,10 +17,10 @@ export default function NavBar({ items = [] }: NavBarProps) {
   const router = useRouter();
   const [currentAnchor, setCurrentAnchor] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
-  const backgroundColor = useThemeColor('background');
-  const foregroundColor = useThemeColor('foreground');
+  // const { isDarkMode } = useTheme();
+  // const primaryColor = useThemeColor('primary');
+  // const backgroundColor = useThemeColor('background');
+  // const foregroundColor = useThemeColor('foreground');
   
   // Load nav items from JSON if not provided
   useEffect(() => {

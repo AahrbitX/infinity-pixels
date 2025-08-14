@@ -12,12 +12,12 @@ import {
 
 export default function ThemeExample() {
   // Get current theme information
-  const { currentPreset, availablePresets, setPreset } = useTheme();
+  const { currentPreset, availablePresets } = useTheme();
   
   // Get specific theme colors
   const primaryColor = useThemeColor('primary');
   const secondaryColor = useThemeColor('secondary');
-  const backgroundColor = useThemeColor('background');
+  // const backgroundColor = useThemeColor('background');
   
   // Get rgba colors with dynamic opacity
   const primaryWithOpacity = useThemeRgba('primary');

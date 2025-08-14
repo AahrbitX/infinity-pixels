@@ -1,17 +1,12 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TrustedByContent } from '@/lib/content';
-import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface TrustedBySectionProps {
   content: TrustedByContent;
 }
 
 export default function TrustedBySection({ content }: TrustedBySectionProps) {
-  const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
-  const primaryRgba = useThemeRgba('primary');
   
   return (
     <section 
@@ -72,7 +67,7 @@ export default function TrustedBySection({ content }: TrustedBySectionProps) {
                   borderColor: 'var(--color-border)',
                   borderWidth: '1px',
                   borderStyle: 'solid',
-                  ['--hover-border-color' as any]: 'var(--color-foregroundMuted)'
+                  ['--hover-border-color' as string]: 'var(--color-foregroundMuted)'
                 }}
                 whileHover={{
                   borderColor: 'var(--color-foregroundMuted)'

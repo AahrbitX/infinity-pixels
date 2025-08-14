@@ -3,61 +3,22 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 export type HeroProps = {
-  backgroundImage?: string;
-  backgroundVideo?: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  statLabel: string;
-  statBody: string;
-  statImage: string;
-  statStack?: string[];
-  ctaLabel: string;
-  ctaHref?: string;
+  slides: Array<{
+    backgroundImage?: string;
+    backgroundVideo?: string;
+    eyebrow: string;
+    title: string;
+    description: string;
+    statLabel: string;
+    statBody: string;
+    statImage: string;
+    ctaLabel: string;
+    ctaHref?: string;
+  }>;
 };
-
-// Define slide data
-const slides = [
-  {
-    eyebrow: "Enjoy the taste of",
-    title: "botanical",
-    description: "Our coffee doesn't have to taste that way. But it does. It's not your typical. It's unnecessarily good.",
-    backgroundImage: "/images/camera.jpg",
-    backgroundVideo: "/videos/hero-background.mp4",
-    statLabel: "99+ Beans",
-    statBody: "'Too far' is exactly where we want to be. All in the name of coffee.",
-    statImage: "/images/camera.jpg",
-    ctaLabel: "Explore Goodies",
-    ctaHref: "#goodies"
-  },
-  {
-    eyebrow: "Discover the art of",
-    title: "coffee",
-    description: "From bean to cup, every step is crafted with passion. Experience the difference that quality makes.",
-    backgroundImage: "/images/wedding.jpg",
-    backgroundVideo: "/videos/hero-background.mp4",
-    statLabel: "Premium Quality",
-    statBody: "Hand-picked beans from the world's finest regions, roasted to perfection.",
-    statImage: "/images/wedding.jpg",
-    ctaLabel: "Learn More",
-    ctaHref: "#about"
-  },
-  {
-    eyebrow: "Experience the journey",
-    title: "adventure",
-    description: "Join us on a journey through the world's most exotic coffee regions. Every cup tells a story.",
-    backgroundImage: "/images/camera.jpg",
-    backgroundVideo: "/videos/hero-background.mp4",
-    statLabel: "Global Sourcing",
-    statBody: "From Ethiopia to Colombia, we bring the world's finest flavors to your cup.",
-    statImage: "/images/camera.jpg",
-    ctaLabel: "Start Journey",
-    ctaHref: "#features"
-  }
-];
 
 export default function Hero(props: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -67,8 +28,38 @@ export default function Hero(props: HeroProps) {
   const autoSlideRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
   const primaryRgba = useThemeRgba('primary');
+  
+  // Get slides from props
+  const slides = props.slides;
+  
+  // Auto-slide functionality
+  useEffect(() => {
+    if (slides.length > 1) {
+      autoSlideRef.current = setInterval(() => {
+        setSlideDirection('left');
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 5000); // Change slide every 5 seconds
+
+      return () => {
+        if (autoSlideRef.current) {
+          clearInterval(autoSlideRef.current);
+        }
+      };
+    }
+  }, [slides.length]);
+
+  // Reset auto-slide timer when manually changing slides
+  useEffect(() => {
+    if (slides.length > 1 && autoSlideRef.current) {
+      clearInterval(autoSlideRef.current);
+      
+      autoSlideRef.current = setInterval(() => {
+        setSlideDirection('left');
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, 5000);
+    }
+  }, [currentSlide, slides.length]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -77,20 +68,20 @@ export default function Hero(props: HeroProps) {
     }
   };
 
-  const nextSlide = () => {
-    setSlideDirection('left');
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  // const nextSlide = () => {
+  //   setSlideDirection('left');
+  //   setCurrentSlide((prev) => (prev + 1) % slides.length);
+  // };
 
-  const prevSlide = () => {
-    setSlideDirection('right');
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  // const prevSlide = () => {
+  //   setSlideDirection('right');
+  //   setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  // };
 
-  const goToSlide = (index: number) => {
-    setSlideDirection(index > currentSlide ? 'left' : 'right');
-    setCurrentSlide(index);
-  };
+  // const goToSlide = (index: number) => {
+  //   setSlideDirection(index > currentSlide ? 'left' : 'right');
+  //   setCurrentSlide(index);
+  // };
 
   // Auto-slide functionality
   useEffect(() => {
@@ -249,20 +240,37 @@ export default function Hero(props: HeroProps) {
               </motion.div>
 
               {/* Navigation Controls */}
-              {/* <div className="flex items-center gap-3 mr-6 mb-6"> */}
-                {/* Previous Button
-                <motion.button 
-                  whileHover={{ scale: 1.05, rotate: -6 }} 
-                  whileTap={{ scale: 0.95 }} 
-                  onClick={prevSlide}
-                  aria-label="Previous slide"
-                  className="w-11 h-11 rounded-full border border-white/70 bg-white/20 text-white font-black shadow-[0_6px_16px_rgba(0,0,0,0.25)] hover:bg-white/30 transition-colors backdrop-blur-sm"
-                >
-                  ←
-                </motion.button> */}
+              {/* {slides.length > 1 && (
+                <div className="flex items-center gap-3 mr-6 mb-6"> */}
+                  {/* Previous Button */}
+                  {/* <motion.button 
+                    whileHover={{ scale: 1.05, rotate: -6 }} 
+                    whileTap={{ scale: 0.95 }} 
+                    onClick={() => {
+                      setSlideDirection('right');
+                      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+                    }}
+                    aria-label="Previous slide"
+                    className="w-11 h-11 rounded-full border border-white/70 bg-white/20 text-white font-black shadow-[0_6px_16px_rgba(0,0,0,0.25)] hover:bg-white/30 transition-colors backdrop-blur-sm"
+                  >
+                    ←
+                  </motion.button> */}
 
-                {/* Next Button */}
-              {/* </div> */}
+                  {/* Next Button */}
+                  {/* <motion.button 
+                    whileHover={{ scale: 1.05, rotate: 6 }} 
+                    whileTap={{ scale: 0.95 }} 
+                    onClick={() => {
+                      setSlideDirection('left');
+                      setCurrentSlide((prev) => (prev + 1) % slides.length);
+                    }}
+                    aria-label="Next slide"
+                    className="w-11 h-11 rounded-full border border-white/70 bg-orange-400 text-black font-black shadow-[0_6px_16px_rgba(0,0,0,0.25)] hover:bg-orange-300 transition-colors"
+                  >
+                    →
+                  </motion.button>
+                </div>
+              )} */}
 
             </div>
           </motion.div>
@@ -271,20 +279,25 @@ export default function Hero(props: HeroProps) {
       </div>
 
       {/* Slide Indicators */}
-      {/* <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-[3]">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide 
-                ? 'bg-orange-400 scale-125' 
-                : 'bg-white/40 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div> */}
+      {slides.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-[3]">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setSlideDirection(index > currentSlide ? 'left' : 'right');
+                setCurrentSlide(index);
+              }}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-orange-400 scale-125' 
+                  : 'bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
 
 {/*       
       <motion.button 
@@ -349,7 +362,7 @@ export default function Hero(props: HeroProps) {
                 borderStyle: 'solid',
                 borderColor: isDarkMode ? 'var(--color-foreground)' : 'var(--color-background)'
               }}
-              href={currentSlideData.ctaHref}
+              href={currentSlideData.ctaHref || '#'}
               aria-label={`${currentSlideData.ctaLabel} - navigate to next section`}
             >
               {currentSlideData.ctaLabel}

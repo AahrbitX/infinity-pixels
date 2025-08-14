@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useTheme } from '@/components/ThemeProvider';
+// import { useTheme } from '@/components/ThemeProvider';
 import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 export type Service = { name: string; body: string; image: string };
@@ -20,7 +20,7 @@ export default function ServiceSection({
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(0); // First card expanded by default
   
-  const { isDarkMode } = useTheme();
+  // const { isDarkMode } = useTheme();
   const primaryColor = useThemeColor('primary');
   const primaryRgba = useThemeRgba('primary');
 
@@ -65,7 +65,7 @@ export default function ServiceSection({
       <div className="flex gap-16 px-10 h-[450px] justify-center items-center">
         {services.map((service, i) => {
           const isExpanded = hoveredIndex === i;
-          const expandDirection = i === 1 ? "right" : "left"; // First and last expand left, middle expands right
+          // const expandDirection = i === 1 ? "right" : "left"; // First and last expand left, middle expands right
           
           return (
             <motion.article
@@ -157,7 +157,7 @@ export default function ServiceSection({
               <div 
                 className="absolute inset-0 border-2 border-transparent rounded-3xl transition-colors duration-500" 
                 style={{ 
-                  ['--hover-border-color' as any]: primaryRgba(0.6)
+                  ['--hover-border-color' as string]: primaryRgba(0.6)
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.borderColor = primaryRgba(0.6); }}
                 onMouseOut={(e) => { e.currentTarget.style.borderColor = 'transparent'; }}

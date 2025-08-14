@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { PackageContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
 import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
@@ -12,10 +12,10 @@ interface PackagesProps {
 }
 
 export default function Packages({ id, content }: PackagesProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
   
   const { isDarkMode } = useTheme();
   const primaryColor = useThemeColor('primary');

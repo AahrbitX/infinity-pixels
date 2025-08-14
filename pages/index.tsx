@@ -14,7 +14,7 @@ import ScrollToTop from '@/components/ui/ScrollToTop';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import FAQ from '@/components/ui/FAQ';
 import ThemeProvider from '@/components/ThemeProvider';
-import ThemeExample from '@/components/ui/ThemeExample';
+// import ThemeExample from '@/components/ui/ThemeExample';
 import { HomeContent } from '@/lib/content';
 import { Theme } from '@/lib/theme';
 import type React from 'react';
@@ -34,19 +34,7 @@ export default function Home({ content }: Props) {
         </Head>
         <main className="flex flex-col gap-12 p-6">
           <NavBar items={content.nav} />
-          <Hero
-            backgroundImage={content.hero.backgroundImage}
-            backgroundVideo={content.hero.backgroundVideo}
-            eyebrow={content.hero.eyebrow}
-            title={content.hero.title}
-            description={content.hero.description}
-            statLabel={content.hero.statLabel}
-            statBody={content.hero.statBody}
-            statImage={content.hero.statImage}
-            statStack={content.hero.statStack}
-            ctaLabel={content.hero.ctaLabel}
-            ctaHref={content.hero.ctaHref}
-          />
+          <Hero slides={content.hero.slides} />
           <AboutSection content={content.about} />
           <TrustedBySection content={content.trustedBy} />
           <FeatureTeasers id="features" content={content.portfolio} />

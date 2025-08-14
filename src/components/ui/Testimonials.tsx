@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TestimonialContent } from '@/lib/content';
-import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+// import { useTheme } from '@/components/ThemeProvider';
+import { useThemeColor } from '@/lib/hooks/useThemeUtils';
 
 interface TestimonialsProps {
   id?: string;
@@ -10,9 +10,9 @@ interface TestimonialsProps {
 }
 
 export default function Testimonials({ id, content }: TestimonialsProps) {
-  const { isDarkMode } = useTheme();
+  // const { isDarkMode } = useTheme();
   const primaryColor = useThemeColor('primary');
-  const primaryRgba = useThemeRgba('primary');
+  // const primaryRgba = useThemeRgba('primary');
   
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (

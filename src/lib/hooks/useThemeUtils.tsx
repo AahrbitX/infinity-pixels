@@ -78,7 +78,7 @@ export function useIsDarkMode(): boolean {
  * @param colorMapping Mapping from original colors to theme color keys
  */
 export function useSvgTheming(
-  svgRef: React.RefObject<SVGSVGElement>,
+  svgRef: React.RefObject<SVGSVGElement | null>,
   colorMapping: Record<string, keyof ThemeColors>
 ) {
   const { getColor } = useTheme();

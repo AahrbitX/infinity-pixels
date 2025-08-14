@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FooterContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeColor} from '@/lib/hooks/useThemeUtils';
 
 interface FooterProps {
   content: FooterContent;
@@ -14,7 +14,7 @@ export default function Footer({ content }: FooterProps) {
   const copyrightText = content.copyright.replace(/\d{4}/, currentYear.toString());
   const { isDarkMode } = useTheme();
   const primaryColor = useThemeColor('primary');
-  const primaryRgba = useThemeRgba('primary');
+  // const primaryRgba = useThemeRgba('primary');
   
   // Social icons mapping
   const socialIcons = {
@@ -78,7 +78,7 @@ export default function Footer({ content }: FooterProps) {
                     style={{
                       backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.2)',
                       color: '#fff',
-                      ['--hover-bg' as any]: primaryColor
+                      ['--hover-bg' as string]: primaryColor
                     }}
                     whileHover={{
                       scale: 1.1, 
@@ -107,7 +107,7 @@ export default function Footer({ content }: FooterProps) {
                       href={link.anchor ? `#${link.anchor}` : link.href} 
                       className="text-gray-300 transition-colors"
                       style={{
-                        ['--hover-color' as any]: primaryColor
+                        ['--hover-color' as string]: primaryColor
                       }}
                       onMouseOver={(e) => { e.currentTarget.style.color = primaryColor }}
                       onMouseOut={(e) => { e.currentTarget.style.color = '' }}

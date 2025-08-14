@@ -7,17 +7,44 @@
     { "label": "Contact", "anchor": "contact" }
   ],
   "hero": {
-    "eyebrow": "Enjoy the taste of",
-    "title": "botanical",
-    "description": "Our coffee doesn't have to taste that way. But it does. It's not your typical. It's unnecessarily good.",
-    "backgroundImage": "/images/camera.jpg",
-    "backgroundVideo": "/videos/hero-background.mp4",
-    "statLabel": "99+ Beans",
-    "statBody": "'Too far' is exactly where we want to be. All in the name of coffee.",
-    "statImage": "/images/camera.jpg",
-    "statStack": ["/images/camera.jpg", "/images/wedding.jpg", "/images/wedding.jpg"],
-    "ctaLabel": "Explore Goodies",
-    "ctaHref": "#goodies"
+    "slides": [
+      {
+        "eyebrow": "Enjoy the taste of",
+        "title": "botanical",
+        "description": "Our coffee doesn't have to taste that way. But it does. It's not your typical. It's unnecessarily good.",
+        "backgroundImage": "/images/camera.jpg",
+        "backgroundVideo": "/videos/hero-background.mp4",
+        "statLabel": "99+ Beans",
+        "statBody": "'Too far' is exactly where we want to be. All in the name of coffee.",
+        "statImage": "/images/camera.jpg",
+        "ctaLabel": "Explore Goodies",
+        "ctaHref": "#goodies"
+      },
+      {
+        "eyebrow": "Discover the art of",
+        "title": "coffee",
+        "description": "From bean to cup, every step is crafted with passion. Experience the difference that quality makes.",
+        "backgroundImage": "/images/wedding.jpg",
+        "backgroundVideo": "/videos/hero-background.mp4",
+        "statLabel": "Premium Quality",
+        "statBody": "Hand-picked beans from the world's finest regions, roasted to perfection.",
+        "statImage": "/images/wedding.jpg",
+        "ctaLabel": "Learn More",
+        "ctaHref": "#about"
+      },
+      {
+        "eyebrow": "Experience the journey",
+        "title": "adventure",
+        "description": "Join us on a journey through the world's most exotic coffee regions. Every cup tells a story.",
+        "backgroundImage": "/images/camera.jpg",
+        "backgroundVideo": "/videos/hero-background.mp4",
+        "statLabel": "Global Sourcing",
+        "statBody": "From Ethiopia to Colombia, we bring the world's finest flavors to your cup.",
+        "statImage": "/images/camera.jpg",
+        "ctaLabel": "Start Journey",
+        "ctaHref": "#features"
+      }
+    ]
   },
   "about": {
     "tagline": "Our Story",

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import '@/styles/globals.css';
 import ThemeProvider from '@/components/ThemeProvider';
 import { AnimatePresence, motion } from 'framer-motion';
-import ThemeSwitcher from '@/components/ui/ThemeSwitcher';
+// import ThemeSwitcher from '@/components/ui/ThemeSwitcher';
 import NavBar from '@/components/ui/NavBar';
 
 type SeoConfig = DefaultSeoProps;

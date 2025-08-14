@@ -59,6 +59,7 @@ export function applyThemeToDocument(theme: Theme) {
   
   // Force layout recalculation by accessing offsetHeight
   if (document.body) {
+    // Force layout recalculation by accessing offsetHeight
     document.body.offsetHeight;
     
     // Add theme version to body for components to detect changes

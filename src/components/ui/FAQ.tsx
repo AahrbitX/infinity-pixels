@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ContactFormModal from './ContactFormModal';
 import { FAQContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface FAQProps {
   id?: string;
@@ -15,7 +15,6 @@ export default function FAQ({ id, content }: FAQProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
   const primaryRgba = useThemeRgba('primary');
 
   const toggleFAQ = (index: number) => {
@@ -79,7 +78,7 @@ export default function FAQ({ id, content }: FAQProps) {
                 className="w-full px-6 py-6 text-left flex items-center justify-between transition-colors duration-200"
                 style={{ 
                   color: 'var(--color-foreground)',
-                  ['--hover-bg' as any]: 'var(--color-backgroundAlt)'
+                  ['--hover-bg' as string]: 'var(--color-backgroundAlt)'
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-backgroundAlt)' }}
                 onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '' }}

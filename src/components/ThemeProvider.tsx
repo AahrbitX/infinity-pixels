@@ -8,7 +8,7 @@ import {
   applyThemePreset, 
   getAvailablePresets,
   getRgbaFromThemeColor,
-  useThemeColor
+  // useThemeColor
 } from '@/lib/theme';
 
 interface ThemeContextType {
