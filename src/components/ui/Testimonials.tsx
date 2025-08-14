@@ -125,6 +125,14 @@ export default function Testimonials({ id }: { id?: string }) {
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {/* Rating */}
+              {/* <div className="relative w-full h-[200px] rounded-lg overflow-hidden mr-4 mb-4">
+                  <Image
+                    src={testimonial.photo}
+                    alt={testimonial.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div> */}
               <div className="flex items-center mb-4">
                 {renderStars(testimonial.rating)}
                 <span className="ml-2 text-sm text-gray-600">({testimonial.rating}.0)</span>
@@ -137,7 +145,7 @@ export default function Testimonials({ id }: { id?: string }) {
 
               {/* Client Info */}
               <div className="flex items-center">
-                <div className="relative w-10 h-[70px] rounded-lg overflow-hidden mr-4">
+              <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden mr-4 mb-4">
                   <Image
                     src={testimonial.photo}
                     alt={testimonial.name}

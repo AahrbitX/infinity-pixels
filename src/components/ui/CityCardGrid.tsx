@@ -3,10 +3,26 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
 
-export type City = { name: string; body: string; image: string };
+export type Service = { name: string; body: string; image: string };
 
-export default function CityCardGrid({ cities, id }: { cities: City[]; id?: string }) {
+export default function ServiceSection({ 
+  services, 
+  id, 
+  title = "Our Services",
+  description = "Discover our comprehensive range of professional services designed to meet your needs"
+}: { 
+  services: Service[]; 
+  id?: string;
+  title?: string;
+  description?: string;
+}) {
   const [hoveredIndex, setHoveredIndex] = useState(0); // First card expanded by default
+
+  // Safety check to prevent map error
+  if (!services || !Array.isArray(services)) {
+    console.warn('ServiceSection: services prop is missing or not an array');
+    return null; // or return a loading state/error message
+  }
 
   return (
     <motion.section 
@@ -16,14 +32,32 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
       viewport={{ once: true }} 
       className="py-20 flex flex-col items-center justify-center"
     >
+      {/* Service Section Header */}
+      <motion.div 
+        className="text-center mb-16 px-6 max-w-4xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+      >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            {title}
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            {description}
+          </p>
+
+      </motion.div>
+
+      {/* Service Cards Grid */}
       <div className="flex gap-16 px-10 h-[450px] justify-center items-center">
-        {cities.map((c, i) => {
+        {services.map((service, i) => {
           const isExpanded = hoveredIndex === i;
           const expandDirection = i === 1 ? "right" : "left"; // First and last expand left, middle expands right
           
           return (
             <motion.article
-              key={c.name}
+              key={service.name}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -41,8 +75,8 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
               {/* Background Image */}
               <div className="absolute inset-0">
                 <Image 
-                  src={c.image} 
-                  alt={`${c.name} city view`} 
+                  src={service.image} 
+                  alt={`${service.name} service`} 
                   fill 
                   className="object-cover transition-transform duration-800" 
                 />
@@ -60,7 +94,7 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 + 0.2 }}
                 >
-                  {c.name}
+                  {service.name}
                 </motion.h4>
                 
                 <motion.p 
@@ -70,10 +104,10 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 + 0.3 }}
                 >
-                  {c.body}
+                  {service.body}
                 </motion.p>
                 
-                {/* Explore button */}
+                {/* Learn More button */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -81,7 +115,7 @@ export default function CityCardGrid({ cities, id }: { cities: City[]; id?: stri
                   transition={{ delay: i * 0.1 + 0.4 }}
                   className="flex items-center gap-3 text-orange-400 font-semibold group-hover:text-orange-300 transition-colors"
                 >
-                  <span className="text-lg">Explore</span>
+                  <span className="text-lg">Learn More</span>
                   <motion.span 
                     className="text-2xl"
                     animate={{ x: [0, 4, 0] }}

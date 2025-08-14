@@ -4,8 +4,9 @@ import { GetStaticProps } from 'next';
 import NavBar from '@/components/ui/NavBar';
 import Hero from '@/components/ui/Hero';
 import AboutSection from '@/components/ui/AboutSection';
+import TrustedBySection from '@/components/ui/TrustedBySection';
 import FeatureTeasers from '@/components/ui/FeatureTeasers';
-import CityCardGrid from '@/components/ui/CityCardGrid';
+import ServiceSection from '@/components/ui/CityCardGrid';
 import Footer from '@/components/ui/Footer';
 import CallToAction from '@/components/ui/CallToAction';
 import Packages from '@/components/ui/Packages';
@@ -40,7 +41,7 @@ type HomeContent = {
     ctaHref?: string;
   };
   features: Array<{ heading: string; body: string; media?: string; variant?: 'text' | 'media' }>;
-  cities: Array<{ name: string; body: string; image: string }>;
+  cities: Array<{ name: string; body: string; image: string }>; // This will be used as services data
 };
 
 type Props = {
@@ -79,8 +80,9 @@ export default function Home({ theme, content }: Props) {
           ctaHref={content.hero.ctaHref}
         />
         <AboutSection />
+        <TrustedBySection />
         <FeatureTeasers id="features"/>
-        <CityCardGrid id="locations" cities={content.cities}/>
+        <ServiceSection id="services" services={content.cities} title="Our Services" description="Discover our comprehensive range of professional services designed to meet your needs"/>
         <Packages id="packages"/>
         <Testimonials id="testimonials"/>
         <CallToAction id="cta"/>
