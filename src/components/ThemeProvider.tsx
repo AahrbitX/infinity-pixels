@@ -39,15 +39,21 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   const [currentPreset, setCurrentPreset] = useState<string>('light');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   
+  // Set initial theme state for SSR consistency
+  const defaultPreset = 'light';
+  
   // Load theme on initial render
   useEffect(() => {
+    // Only run localStorage operations client-side
+    if (typeof window === 'undefined') return;
+    
     loadTheme()
       .then((loadedTheme) => {
         setTheme(loadedTheme);
         setAvailablePresets(getAvailablePresets(loadedTheme));
         
         // Check for stored preset preference
-        const storedPreset = localStorage.getItem('themePreset') || 'light';
+        const storedPreset = localStorage.getItem('themePreset') || defaultPreset;
         setCurrentPreset(storedPreset);
         setIsDarkMode(storedPreset === 'dark');
         

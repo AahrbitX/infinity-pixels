@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ __seo?: SeoCo
         <NavBar />
         <AnimatePresence mode="wait">
           <motion.div
-            key={(pageProps as { _key?: string })?._key ?? typeof window !== 'undefined' ? location.pathname : 'server'}
+            key={(pageProps as { _key?: string })?._key ?? (typeof window !== 'undefined' ? location.pathname : 'server')}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

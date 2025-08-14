@@ -58,10 +58,10 @@ export default function Home({ content }: Props) {
           />
           <Packages id="packages" content={content.packages} />
           <Testimonials id="testimonials" content={content.testimonials} />
-          <div className="container mx-auto">
+          {/* <div className="container mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-center" style={{ color: 'var(--color-foreground)' }}>Theme Example</h2>
             <ThemeExample />
-          </div>
+          </div> */}
           <CallToAction id="cta" content={content.cta} />
           <FAQ id="faq" content={content.faq} />
           <Footer content={content.footer} />

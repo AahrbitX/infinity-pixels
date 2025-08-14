@@ -16,6 +16,8 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
           />
+          {/* Hide Next.js icon */}
+          <link rel="icon" href="data:," />
         </Head>
         <body>
           <Main />

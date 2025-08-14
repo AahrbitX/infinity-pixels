@@ -58,13 +58,15 @@ export function applyThemeToDocument(theme: Theme) {
   const root = document.documentElement;
   
   // Force layout recalculation by accessing offsetHeight
-  document.body.offsetHeight;
-  
-  // Add theme version to body for components to detect changes
-  document.body.dataset.themeVersion = Date.now().toString();
-  
-  // Add transition class to ensure smooth transitions
-  document.body.classList.add('theme-transition');
+  if (document.body) {
+    document.body.offsetHeight;
+    
+    // Add theme version to body for components to detect changes
+    document.body.dataset.themeVersion = Date.now().toString();
+    
+    // Add transition class to ensure smooth transitions
+    document.body.classList.add('theme-transition');
+  }
   
   // Apply color variables
   Object.entries(theme.colors).forEach(([key, value]) => {
@@ -172,9 +174,11 @@ export function applyThemeToDocument(theme: Theme) {
   document.head.appendChild(styleSheet);
   
   // Remove transition class after a short delay to prevent transition during normal interactions
-  setTimeout(() => {
-    document.body.classList.remove('theme-transition');
-  }, 300);
+  if (document.body) {
+    setTimeout(() => {
+      document.body.classList.remove('theme-transition');
+    }, 300);
+  }
 }
 
 export function applyThemePreset(theme: Theme, presetName: string): Theme {
