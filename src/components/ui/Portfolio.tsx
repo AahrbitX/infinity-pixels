@@ -334,7 +334,7 @@ export default function Portfolio({ id, content }: PortfolioProps) {
                 onClick={closeModal}
                 className="absolute top-4 right-4 z-10 p-2 rounded-full transition-colors"
                 style={{
-                  backgroundColor: `${primaryRgba(0.5)}`,
+                  // backgroundColor: `${primaryRgba(0.5)}`,
                   color: '#fff'
                 }}
                 whileHover={{
@@ -349,12 +349,12 @@ export default function Portfolio({ id, content }: PortfolioProps) {
                 <motion.button
                   onClick={openLink}
                   className="absolute top-4 right-16 z-10 p-2 text-white rounded-full transition-colors"
-                  style={{
-                    background: `linear-gradient(to right, ${primaryRgba(0.8)}, ${primaryColor})`
-                  }}
-                  whileHover={{
-                    background: `linear-gradient(to right, ${primaryRgba(0.9)}, ${primaryRgba(0.8)})`
-                  }}
+                  // style={{
+                  //   background: `linear-gradient(to right, ${primaryRgba(0.8)}, ${primaryColor})`
+                  // }}
+                  // whileHover={{
+                  //   background: `linear-gradient(to right, ${primaryRgba(0.9)}, ${primaryRgba(0.8)})`
+                  // }}
                   title="View Project"
                 >
                   <Instagram size={24} />
@@ -365,12 +365,12 @@ export default function Portfolio({ id, content }: PortfolioProps) {
               <motion.button
                 onClick={goToPrevious}
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 text-white rounded-full transition-colors"
-                style={{
-                  backgroundColor: `${primaryRgba(0.5)}`
-                }}
-                whileHover={{
-                  backgroundColor: primaryRgba(0.7)
-                }}
+                // style={{
+                //   backgroundColor: `${primaryRgba(0.5)}`
+                // }}
+                // whileHover={{
+                //   backgroundColor: primaryRgba(0.7)
+                // }}
               >
                 <ChevronLeft size={32} />
               </motion.button>
@@ -378,12 +378,12 @@ export default function Portfolio({ id, content }: PortfolioProps) {
               <motion.button
                 onClick={goToNext}
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 text-white rounded-full transition-colors"
-                style={{
-                  backgroundColor: `${primaryRgba(0.5)}`
-                }}
-                whileHover={{
-                  backgroundColor: primaryRgba(0.7)
-                }}
+                // style={{
+                //   backgroundColor: `${primaryRgba(0.5)}`
+                // }}
+                // whileHover={{
+                //   backgroundColor: primaryRgba(0.7)
+                // }}
               >
                 <ChevronRight size={32} />
               </motion.button>
@@ -401,9 +401,9 @@ export default function Portfolio({ id, content }: PortfolioProps) {
                 {/* Image Info */}
                 <div 
                   className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-full"
-                  style={{
-                    backgroundColor: `${primaryRgba(0.7)}`
-                  }}
+                  // style={{
+                  //   backgroundColor: `${primaryRgba(0.7)}`
+                  // }}
                 >
                   <h3 className="text-lg font-semibold text-center">
                     {galleryImages[selectedImageIndex].title}
