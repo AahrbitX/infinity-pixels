@@ -95,7 +95,7 @@ export default function Hero(props: HeroProps) {
         clearInterval(autoSlideRef.current);
       }
     };
-  }, []);
+  }, [slides.length]);
 
   // Reset auto-slide timer when manually changing slides
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function Hero(props: HeroProps) {
       setSlideDirection('left');
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
-  }, [currentSlide]);
+  }, [currentSlide, slides.length]);
 
   const currentSlideData = slides[currentSlide];
 

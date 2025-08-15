@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from '@/components/ThemeProvider';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 interface LightDarkToggleProps {
   className?: string;

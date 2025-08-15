@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
 import { PortfolioContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface PortfolioProps {
   id?: string;
@@ -16,7 +16,7 @@ export default function Portfolio({ id, content }: PortfolioProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  // const primaryColor = useThemeColor('primary');
   const primaryRgba = useThemeRgba('primary');
 
   // Convert portfolio items to gallery format
