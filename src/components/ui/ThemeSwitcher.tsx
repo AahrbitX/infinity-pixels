@@ -19,6 +19,7 @@ export default function ThemeSwitcher({
   const [isOpen, setIsOpen] = useState(false);
   const [useSystemTheme, setUseSystemTheme] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const defaultPreset = 'lime';
   
   // Toggle dropdown
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -55,7 +56,7 @@ export default function ThemeSwitcher({
     // If enabling system theme, immediately check system preference
     if (newValue) {
       const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setPreset(isDarkMode ? 'dark' : 'light');
+      setPreset(isDarkMode ? 'dark' : defaultPreset);
     }
   };
   
@@ -67,9 +68,15 @@ export default function ThemeSwitcher({
     light: 'bg-white border-gray-300',
     dark: 'bg-gray-900 border-gray-600',
     blue: 'bg-[var(--color-blue-500)] border-[var(--color-blue-700)]',
+    'blue-dark': 'bg-[var(--color-blue-700)] border-[var(--color-blue-900)]',
     green: 'bg-[var(--color-green-500)] border-[var(--color-green-700)]',
+    'green-dark': 'bg-[var(--color-green-700)] border-[var(--color-green-900)]',
     orange: 'bg-[var(--color-orange-500)] border-[var(--color-orange-700)]',
-    red: 'bg-[var(--color-red-500)] border-[var(--color-red-700)]'
+    'orange-dark': 'bg-[var(--color-orange-700)] border-[var(--color-orange-900)]',
+    red: 'bg-[var(--color-red-500)] border-[var(--color-red-700)]',
+    'red-dark': 'bg-[var(--color-red-700)] border-[var(--color-red-900)]',
+    lime: 'bg-[var(--color-lime-500)] border-[var(--color-lime-700)]',
+    'lime-dark': 'bg-[var(--color-lime-700)] border-[var(--color-lime-900)]'
   };
   
   // Render simple light/dark mode toggle switch

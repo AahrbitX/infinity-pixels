@@ -22,6 +22,9 @@ export type ThemeColors = {
   warningLight?: string;
   info?: string;
   infoLight?: string;
+  lime?: string;
+  limeLight?: string;
+  limeDark?: string;
   border?: string;
   borderLight?: string;
   shadow?: string;

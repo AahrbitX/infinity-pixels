@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import ThemeSwitcher from './ThemeSwitcher';
 import { NavItem } from '@/lib/content';
+import LightDarkToggle from './LightDarkToggle';
 // import { useTheme } from '@/components/ThemeProvider';
 // import { useThemeColor } from '@/lib/hooks/useThemeUtils';
 
@@ -166,8 +166,10 @@ export default function NavBar({ items = [] }: NavBarProps) {
             <span className="block w-5 h-0.5" style={{ backgroundColor: 'var(--color-foreground)' }} />
           </button>
           
-          {/* Add theme switcher to mobile nav */}
-          <ThemeSwitcher />
+          {/* Light/Dark Mode Toggle */}
+          <LightDarkToggle showLabel={false} />
+          
+
         </div>
 
         <motion.div
@@ -304,8 +306,10 @@ export default function NavBar({ items = [] }: NavBarProps) {
             })}
           </ul>
           
-          {/* Add theme switcher to desktop nav */}
-          <ThemeSwitcher className="hidden md:block" />
+          {/* Light/Dark Mode Toggle */}
+          <LightDarkToggle />
+          
+
         </div>
       </nav>
     </motion.div>

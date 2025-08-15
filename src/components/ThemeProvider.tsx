@@ -40,7 +40,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   
   // Set initial theme state for SSR consistency
-  const defaultPreset = 'light';
+  const defaultPreset = 'lime';
   
   // Load theme on initial render
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
         // Check for stored preset preference
         const storedPreset = localStorage.getItem('themePreset') || defaultPreset;
         setCurrentPreset(storedPreset);
-        setIsDarkMode(storedPreset === 'dark');
+        setIsDarkMode(storedPreset === 'dark' || storedPreset.endsWith('-dark'));
         
         // Apply theme with preset
         const themedTheme = applyThemePreset(loadedTheme, storedPreset);
@@ -77,6 +77,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     const handleChange = (e: MediaQueryListEvent) => {
+      // For system theme, we'll use the base light/dark presets
       const newPreset = e.matches ? 'dark' : 'light';
       if (theme) {
         setCurrentPreset(newPreset);
@@ -96,7 +97,9 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     
     // Force immediate state update
     setCurrentPreset(preset);
-    setIsDarkMode(preset === 'dark');
+    const newIsDarkMode = preset === 'dark' || preset.endsWith('-dark');
+    setIsDarkMode(newIsDarkMode);
+    
     localStorage.setItem('themePreset', preset);
     
     // Apply theme synchronously

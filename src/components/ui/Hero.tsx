@@ -185,6 +185,8 @@ export default function Hero(props: HeroProps) {
                 style={{
                   backgroundColor: `${primaryRgba(0.1)}`,
                   borderColor: `${primaryRgba(0.2)}`,
+                  // backgroundColor: 'var(--color-lime)',
+                  // color: 'var(--color-background)',
                   borderWidth: '1px',
                   borderStyle: 'solid'
                 }}
