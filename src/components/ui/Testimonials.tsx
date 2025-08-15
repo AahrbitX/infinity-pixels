@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { TestimonialContent } from '@/lib/content';
 // import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor } from '@/lib/hooks/useThemeUtils';
+import { useThemeColorImmediate } from '@/lib/hooks/useThemeUtils';
 
 interface TestimonialsProps {
   id?: string;
@@ -11,7 +11,7 @@ interface TestimonialsProps {
 
 export default function Testimonials({ id, content }: TestimonialsProps) {
   // const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  const primaryColor = useThemeColorImmediate('primary');
   // const primaryRgba = useThemeRgba('primary');
   
   const renderStars = (rating: number) => {

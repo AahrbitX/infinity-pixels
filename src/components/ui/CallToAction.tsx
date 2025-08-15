@@ -4,7 +4,7 @@ import Image from 'next/image';
 import ContactFormModal from './ContactFormModal';
 import { CallToActionContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeColorImmediate, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface CallToActionProps {
   id?: string;
@@ -17,7 +17,7 @@ export default function CallToAction({ id, content }: CallToActionProps) {
   const closeModal = () => setIsModalOpen(false);
   
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  const primaryColor = useThemeColorImmediate('primary');
   const primaryRgba = useThemeRgba('primary');
 
   return (

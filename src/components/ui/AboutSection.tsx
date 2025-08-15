@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { AboutContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeColorImmediate, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 interface AboutSectionProps {
   content: AboutContent;
@@ -10,7 +10,7 @@ interface AboutSectionProps {
 
 export default function AboutSection({ content }: AboutSectionProps) {
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  const primaryColor = useThemeColorImmediate('primary');
   const primaryRgba = useThemeRgba('primary');
   
   return (

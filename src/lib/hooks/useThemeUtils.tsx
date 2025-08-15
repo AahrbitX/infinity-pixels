@@ -11,12 +11,37 @@ import { useCallback, useEffect, useState } from 'react';
  * @returns The CSS variable value
  */
 export function useThemeColor(colorKey: keyof ThemeColors, fallback?: string): string {
-  const { getColor } = useTheme();
+  const { currentPreset } = useTheme();
   const [color, setColor] = useState(fallback || '');
   
   useEffect(() => {
-    setColor(getColor(colorKey) || fallback || '');
-  }, [colorKey, getColor, fallback]);
+    // Read directly from CSS variables for immediate updates
+    const updateColor = () => {
+      if (typeof document === 'undefined') return;
+      const cssValue = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--color-${colorKey}`).trim();
+      setColor(cssValue || fallback || '');
+    };
+    
+    // Update immediately
+    updateColor();
+    
+    // Also listen for theme changes via data attribute changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && 
+            mutation.attributeName === 'data-theme-version') {
+          updateColor();
+        }
+      });
+    });
+    
+    if (document.body) {
+      observer.observe(document.body, { attributes: true });
+    }
+    
+    return () => observer.disconnect();
+  }, [colorKey, fallback, currentPreset]);
   
   return color;
 }
@@ -48,17 +73,42 @@ export function useThemeGradient(
   endColor: keyof ThemeColors,
   direction: string = 'to right'
 ): string {
-  const { getColor } = useTheme();
+  const { currentPreset } = useTheme();
   const [gradient, setGradient] = useState('');
   
   useEffect(() => {
-    const start = getColor(startColor);
-    const end = getColor(endColor);
+    // Read directly from CSS variables for immediate updates
+    const updateGradient = () => {
+      if (typeof document === 'undefined') return;
+      const start = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--color-${startColor}`).trim();
+      const end = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--color-${endColor}`).trim();
+      
+      if (start && end) {
+        setGradient(`linear-gradient(${direction}, ${start}, ${end})`);
+      }
+    };
     
-    if (start && end) {
-      setGradient(`linear-gradient(${direction}, ${start}, ${end})`);
+    // Update immediately
+    updateGradient();
+    
+    // Also listen for theme changes via data attribute changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && 
+            mutation.attributeName === 'data-theme-version') {
+          updateGradient();
+        }
+      });
+    });
+    
+    if (document.body) {
+      observer.observe(document.body, { attributes: true });
     }
-  }, [startColor, endColor, direction, getColor]);
+    
+    return () => observer.disconnect();
+  }, [startColor, endColor, direction, currentPreset]);
   
   return gradient;
 }
@@ -81,7 +131,6 @@ export function useSvgTheming(
   svgRef: React.RefObject<SVGSVGElement | null>,
   colorMapping: Record<string, keyof ThemeColors>
 ) {
-  const { getColor } = useTheme();
   const { currentPreset } = useTheme();
   
   useEffect(() => {
@@ -96,7 +145,8 @@ export function useSvgTheming(
       if (el.hasAttribute('stroke')) {
         const originalColor = el.getAttribute('stroke');
         if (originalColor && colorMapping[originalColor]) {
-          const themeColor = getColor(colorMapping[originalColor]);
+          const themeColor = getComputedStyle(document.documentElement)
+            .getPropertyValue(`--color-${colorMapping[originalColor]}`).trim();
           if (themeColor) {
             el.setAttribute('stroke', themeColor);
           }
@@ -107,7 +157,8 @@ export function useSvgTheming(
       if (el.hasAttribute('fill')) {
         const originalColor = el.getAttribute('fill');
         if (originalColor && colorMapping[originalColor]) {
-          const themeColor = getColor(colorMapping[originalColor]);
+          const themeColor = getComputedStyle(document.documentElement)
+            .getPropertyValue(`--color-${colorMapping[originalColor]}`).trim();
           if (themeColor) {
             el.setAttribute('fill', themeColor);
           }
@@ -120,5 +171,47 @@ export function useSvgTheming(
 
     // Start processing from the root SVG element
     processElement(svg);
-  }, [svgRef, colorMapping, getColor, currentPreset]);
+  }, [svgRef, colorMapping, currentPreset]);
+}
+
+/**
+ * Hook that provides immediate access to theme colors via CSS custom properties
+ * This hook is more reactive than useThemeColor for immediate theme switching
+ * @param colorKey The theme color key
+ * @returns The current theme color value
+ */
+export function useThemeColorImmediate(colorKey: keyof ThemeColors): string {
+  const { currentPreset } = useTheme();
+  const [color, setColor] = useState('');
+  
+  useEffect(() => {
+    const updateColor = () => {
+      if (typeof document === 'undefined') return;
+      const cssValue = getComputedStyle(document.documentElement)
+        .getPropertyValue(`--color-${colorKey}`).trim();
+      setColor(cssValue);
+    };
+    
+    // Update immediately
+    updateColor();
+    
+    // Listen for theme changes via data attribute changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && 
+            (mutation.attributeName === 'data-theme-version' || 
+             mutation.attributeName === 'data-theme-updated')) {
+          updateColor();
+        }
+      });
+    });
+    
+    if (document.body) {
+      observer.observe(document.body, { attributes: true });
+    }
+    
+    return () => observer.disconnect();
+  }, [colorKey, currentPreset]);
+  
+  return color;
 }

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
 // import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeColorImmediate, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 
 export type Service = { name: string; body: string; image: string };
 
@@ -21,7 +21,7 @@ export default function ServiceSection({
   const [hoveredIndex, setHoveredIndex] = useState(0); // First card expanded by default
   
   // const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  const primaryColor = useThemeColorImmediate('primary');
   const primaryRgba = useThemeRgba('primary');
 
   // Safety check to prevent map error

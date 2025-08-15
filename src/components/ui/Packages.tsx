@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 // import { useState } from 'react';
 import { PackageContent } from '@/lib/content';
 import { useTheme } from '@/components/ThemeProvider';
-import { useThemeColor, useThemeRgba } from '@/lib/hooks/useThemeUtils';
+import { useThemeColorImmediate, useThemeRgba } from '@/lib/hooks/useThemeUtils';
 // import ContactFormModal from './ContactFormModal';
 // import { CheckIcon } from '@heroicons/react/24/outline';
 
@@ -18,7 +18,7 @@ export default function Packages({ id, content }: PackagesProps) {
   // const closeModal = () => setIsModalOpen(false);
   
   const { isDarkMode } = useTheme();
-  const primaryColor = useThemeColor('primary');
+  const primaryColor = useThemeColorImmediate('primary');
   const primaryRgba = useThemeRgba('primary');
 
   return (
