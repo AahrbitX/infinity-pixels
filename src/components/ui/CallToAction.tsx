@@ -149,8 +149,8 @@ export default function CallToAction({ id, content }: CallToActionProps) {
             transition={{ duration: 0.8, delay: 1.0 }}
             className="flex justify-center items-center mb-16"
             >
-            <a
-                href={content.buttonHref}
+            <button
+                onClick={openModal}
             >   
                 <div 
                   className='flex justify-center items-center w-full py-3 px-6 rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 font-medium text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed'
@@ -162,7 +162,7 @@ export default function CallToAction({ id, content }: CallToActionProps) {
                 >
                 {content.buttonText}
                 </div>
-            </a>
+            </button>
             </motion.div>
 
             {/* Enhanced Contact Section */}

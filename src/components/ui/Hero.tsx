@@ -357,10 +357,10 @@ export default function Hero(props: HeroProps) {
               className="flex justify-center items-center p-2 w-[250px] ml-2 rounded-2xl font-bold text-lg transition-colors"
               style={{
                 backgroundColor: 'transparent',
-                color: isDarkMode ? 'var(--color-foreground)' : 'var(--color-background)',
+                color: isDarkMode ? 'var(--color-foreground)' : 'var(--color-foreground)',
                 borderWidth: '2px',
                 borderStyle: 'solid',
-                borderColor: isDarkMode ? 'var(--color-foreground)' : 'var(--color-background)'
+                borderColor: isDarkMode ? 'var(--color-foreground)' : 'var(--color-foreground)'
               }}
               href={currentSlideData.ctaHref || '#'}
               aria-label={`${currentSlideData.ctaLabel} - navigate to next section`}

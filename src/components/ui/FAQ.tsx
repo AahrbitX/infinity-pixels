@@ -78,10 +78,10 @@ export default function FAQ({ id, content }: FAQProps) {
                 className="w-full px-6 py-6 text-left flex items-center justify-between transition-colors duration-200"
                 style={{ 
                   color: 'var(--color-foreground)',
-                  ['--hover-bg' as string]: 'var(--color-backgroundAlt)'
+                  // ['--hover-bg' as string]: 'var(--color-backgroundAlt)'
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-backgroundAlt)' }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '' }}
+                // onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-backgroundAlt)' }}
+                // onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '' }}
               >
                 <h3 className="text-lg font-semibold pr-4" style={{ color: 'var(--color-foreground)' }}>
                   {item.question}

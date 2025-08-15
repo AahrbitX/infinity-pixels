@@ -4,7 +4,7 @@ import NavBar from '@/components/ui/NavBar';
 import Hero from '@/components/ui/Hero';
 import AboutSection from '@/components/ui/AboutSection';
 import TrustedBySection from '@/components/ui/TrustedBySection';
-import FeatureTeasers from '@/components/ui/Portfolio';
+import Portfolio from '@/components/ui/Portfolio';
 import ServiceSection from '@/components/ui/Services';
 import Footer from '@/components/ui/Footer';
 import CallToAction from '@/components/ui/CallToAction';
@@ -37,7 +37,7 @@ export default function Home({ content }: Props) {
           <Hero slides={content.hero.slides} />
           <AboutSection content={content.about} />
           <TrustedBySection content={content.trustedBy} />
-          <FeatureTeasers id="features" content={content.portfolio} />
+          <Portfolio id="gallery" content={content.portfolio} />
           <ServiceSection 
             id="services" 
             services={content.services} 

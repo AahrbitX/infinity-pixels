@@ -2,9 +2,9 @@
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "About", "anchor": "about" },
-    { "label": "Portfolio", "href": "/portfolio" },
-    { "label": "Features", "anchor": "features" },
-    { "label": "Contact", "anchor": "contact" }
+    { "label": "Gallery", "anchor": "gallery" },
+    { "label": "Features", "anchor": "services" },
+    { "label": "Contact", "anchor": "cta" }
   ],
   "hero": {
     "slides": [
@@ -210,7 +210,6 @@
     "title": "Ready to Start Your Project?",
     "description": "Contact us today to discuss your project requirements and get a free quote.",
     "buttonText": "Get in Touch",
-    "buttonHref": "#contact",
     "backgroundImage": "/images/camera.jpg"
   },
   "faq": {
@@ -246,9 +245,9 @@
     },
     "quickLinks": [
       { "label": "Home", "href": "/" },
-      { "label": "Portfolio", "href": "/portfolio" },
+      { "label": "Gallery", "href": "#gallery" },
       { "label": "About", "href": "#about" },
-      { "label": "Features", "href": "#features" }
+      { "label": "Services", "href": "#services" }
     ],
     "contact": {
       "address": "123 Coffee Street",
